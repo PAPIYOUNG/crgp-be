@@ -1,0 +1,463 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/database/generated/prisma"
+  moduleFormat = "cjs" //ให้ Build หรือ Compile โค้ดออกมาเป็น CommonJS (CJS)
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SystemRole {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum Department {
+  IT
+  ENGINEERING
+  FINANCE
+  HUMAN_RESOURCES
+  SALES
+  MARKETING
+  OPERATIONS
+  SECURITY
+  OTHER
+}
+
+enum ProjectStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum ProjectMemberRole {
+  BUSINESS_OWNER
+  TECHNICAL_OWNER
+  MEMBER
+}
+
+enum ResourceSource {
+  MANUAL
+  AWS_CONFIG
+}
+
+enum SyncType {
+  AWS_CONFIG
+  COST_EXPLORER
+}
+
+enum SyncStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+enum ActivityAction {
+  CREATE
+  UPDATE
+  DELETE
+  ADD_MEMBER
+  REMOVE_MEMBER
+  ASSIGN_OWNER
+  LINK_AWS_ACCOUNT
+  UNLINK_AWS_ACCOUNT
+  UPLOAD_FILE
+  IMPORT
+  EXPORT
+  SYNC
+}
+
+enum Environment {
+  DEV
+  TEST
+  UAT
+  STAGING
+  PROD
+}
+
+/**
+ * =========================================================
+ * USER
+ * =========================================================
+ */
+
+model User {
+  id           String     @id @default(uuid()) @db.Uuid
+  firstName    String     @map("first_name") @db.VarChar(100)
+  lastName     String     @map("last_name") @db.VarChar(100)
+  email        String     @unique @db.VarChar(255)
+  passwordHash String     @map("password_hash") @db.VarChar(255)
+  avatarUrl    String?    @map("avatar_url") @db.VarChar(1500)
+  role         SystemRole @default(USER)
+  department   Department
+  status       UserStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt    DateTime   @updatedAt @map("updated_at") @db.Timestamptz()
+
+  createdProjects       Project[]               @relation("ProjectCreatedBy")
+  projectMemberships    ProjectMember[]
+  linkedAwsAccounts     ProjectAwsAccount[]     @relation("AwsAccountLinkedBy")
+  ownedResources        CloudResource[]         @relation("ResourceOwner")
+  createdDocumentations ResourceDocumentation[] @relation("DocumentationCreatedBy")
+  updatedDocumentations ResourceDocumentation[] @relation("DocumentationUpdatedBy")
+  uploadedFiles         FileAttachment[]        @relation("FileUploadedBy")
+  activityLogs          ActivityLog[]
+  triggeredSyncJobs     SyncJob[]               @relation("SyncTriggeredBy")
+
+  @@index([role])
+  @@index([department])
+  @@index([status])
+  @@map("users")
+}
+
+/**
+ * =========================================================
+ * PROJECT
+ * =========================================================
+ */
+
+model Project {
+  id                  String        @id @default(uuid()) @db.Uuid
+  projectName         String        @map("project_name") @db.VarChar(150)
+  projectCode         String        @unique @default(uuid()) @map("project_code") @db.Uuid
+  description         String?       @db.Text
+  businessDepartment  Department    @map("business_department")
+  technicalDepartment Department    @map("technical_department")
+  monthlyBudget       Decimal?      @map("monthly_budget") @db.Decimal(14, 2)
+  budgetCurrency      String        @default("USD") @map("budget_currency") @db.VarChar(3)
+  status              ProjectStatus @default(ACTIVE)
+  startDate           DateTime?     @map("start_date") @db.Date
+  endDate             DateTime?     @map("end_date") @db.Date
+  createdById         String        @map("created_by_id") @db.Uuid
+  createdAt           DateTime      @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt           DateTime      @updatedAt @map("updated_at") @db.Timestamptz()
+
+  createdBy          User                @relation("ProjectCreatedBy", fields: [createdById], references: [id])
+  members            ProjectMember[]
+  projectAwsAccounts ProjectAwsAccount[]
+  resources          CloudResource[]
+  fileAttachments    FileAttachment[]
+  activityLogs       ActivityLog[]
+
+  @@index([projectName])
+  @@index([businessDepartment])
+  @@index([technicalDepartment])
+  @@index([status])
+  @@map("projects")
+}
+
+/**
+ * =========================================================
+ * PROJECT MEMBER
+ * =========================================================
+ */
+
+model ProjectMember {
+  id         String            @id @default(uuid()) @db.Uuid
+  projectId  String            @map("project_id") @db.Uuid
+  userId     String            @map("user_id") @db.Uuid
+  memberRole ProjectMemberRole @default(MEMBER) @map("member_role")
+  joinedAt   DateTime          @default(now()) @map("joined_at") @db.Timestamptz()
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
+  @@index([memberRole])
+  @@map("project_members")
+}
+
+/**
+ * =========================================================
+ * AWS ACCOUNT
+ * =========================================================
+ */
+
+model AwsAccount {
+  id                 String     @id @default(uuid()) @db.Uuid
+  awsAccountId       String     @unique @map("aws_account_id") @db.VarChar(12)
+  accountName        String     @map("account_name") @db.VarChar(150)
+  ownerDepartment    Department @map("owner_department")
+  defaultRegion      String     @map("default_region") @db.VarChar(50)
+  isActive           Boolean    @default(true) @map("is_active")
+  lastConfigSyncedAt DateTime?  @map("last_config_synced_at") @db.Timestamptz()
+  lastCostSyncedAt   DateTime?  @map("last_cost_synced_at") @db.Timestamptz()
+  createdAt          DateTime   @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt          DateTime   @updatedAt @map("updated_at") @db.Timestamptz()
+
+  projectAwsAccounts ProjectAwsAccount[]
+  resources          CloudResource[]
+  costRecords        CostRecord[]
+  activityLogs       ActivityLog[]
+  syncJobs           SyncJob[]
+
+  @@index([ownerDepartment])
+  @@index([isActive])
+  @@map("aws_accounts")
+}
+
+/**
+ * =========================================================
+ * PROJECT AWS ACCOUNT
+ * =========================================================
+ */
+
+model ProjectAwsAccount {
+  id           String   @id @default(uuid()) @db.Uuid
+  projectId    String   @map("project_id") @db.Uuid
+  awsAccountId String   @map("aws_account_id") @db.Uuid
+  linkedById   String   @map("linked_by_id") @db.Uuid
+  linkedAt     DateTime @default(now()) @map("linked_at") @db.Timestamptz()
+
+  project    Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  awsAccount AwsAccount @relation(fields: [awsAccountId], references: [id], onDelete: Cascade)
+  linkedBy   User       @relation("AwsAccountLinkedBy", fields: [linkedById], references: [id])
+
+  @@unique([projectId, awsAccountId])
+  @@index([projectId])
+  @@index([awsAccountId])
+  @@map("project_aws_accounts")
+}
+
+/**
+ * =========================================================
+ * CLOUD RESOURCE
+ * =========================================================
+ */
+
+model CloudResource {
+  id                 String         @id @default(uuid()) @db.Uuid
+  awsAccountId       String         @map("aws_account_id") @db.Uuid
+  projectId          String?        @map("project_id") @db.Uuid
+  resourceIdentifier String         @map("resource_identifier") @db.VarChar(500)
+  resourceArn        String?        @map("resource_arn") @db.VarChar(1000)
+  resourceName       String?        @map("resource_name") @db.VarChar(255)
+  resourceType       String         @map("resource_type") @db.VarChar(150)
+  region             String?        @db.VarChar(50)
+  availabilityZone   String?        @map("availability_zone") @db.VarChar(50)
+  resourceStatus     String?        @map("resource_status") @db.VarChar(100)
+  source             ResourceSource @default(AWS_CONFIG)
+  environment        Environment?
+  ownerId            String?        @map("owner_id") @db.Uuid
+  description        String?        @db.Text
+  configuration      Json?
+  awsCaptureTime     DateTime?      @map("aws_capture_time") @db.Timestamptz()
+  lastSyncedAt       DateTime       @map("last_synced_at") @db.Timestamptz()
+  isDeleted          Boolean        @default(false) @map("is_deleted")
+  deletedAt          DateTime?      @map("deleted_at") @db.Timestamptz()
+  createdAt          DateTime       @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt          DateTime       @updatedAt @map("updated_at") @db.Timestamptz()
+
+  awsAccount AwsAccount @relation(fields: [awsAccountId], references: [id])
+  project    Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  owner      User?      @relation("ResourceOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  tags            ResourceTag[]
+  costRecords     CostRecord[]
+  documentation   ResourceDocumentation?
+  fileAttachments FileAttachment[]
+  activityLogs    ActivityLog[]
+
+  @@unique([awsAccountId, resourceType, resourceIdentifier])
+  @@index([awsAccountId])
+  @@index([projectId])
+  @@index([ownerId])
+  @@index([resourceName])
+  @@index([resourceType])
+  @@index([region])
+  @@index([environment])
+  @@index([resourceStatus])
+  @@index([isDeleted])
+  @@map("cloud_resources")
+}
+
+/**
+ * =========================================================
+ * RESOURCE TAG
+ * =========================================================
+ */
+
+model ResourceTag {
+  id         String   @id @default(uuid()) @db.Uuid
+  resourceId String   @map("resource_id") @db.Uuid
+  tagKey     String   @map("tag_key") @db.VarChar(255)
+  tagValue   String?  @map("tag_value") @db.VarChar(1000)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  resource CloudResource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@unique([resourceId, tagKey])
+  @@index([tagKey])
+  @@index([tagValue])
+  @@map("resource_tags")
+}
+
+/**
+ * =========================================================
+ * COST RECORD
+ * =========================================================
+ */
+
+model CostRecord {
+  id           String   @id @default(uuid()) @db.Uuid
+  awsAccountId String   @map("aws_account_id") @db.Uuid
+  resourceId   String?  @map("resource_id") @db.Uuid
+  periodStart  DateTime @map("period_start") @db.Date
+  periodEnd    DateTime @map("period_end") @db.Date
+  service      String   @db.VarChar(255)
+  region       String?  @db.VarChar(50)
+  amount       Decimal  @db.Decimal(20, 8)
+  currency     String   @default("USD") @db.VarChar(10)
+  isEstimated  Boolean  @default(false) @map("is_estimated")
+  syncedAt     DateTime @default(now()) @map("synced_at") @db.Timestamptz()
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  awsAccount AwsAccount     @relation(fields: [awsAccountId], references: [id])
+  resource   CloudResource? @relation(fields: [resourceId], references: [id], onDelete: SetNull)
+
+  @@index([awsAccountId])
+  @@index([resourceId])
+  @@index([periodStart])
+  @@index([periodEnd])
+  @@index([service])
+  @@index([region])
+  @@map("cost_records")
+}
+
+/**
+ * =========================================================
+ * RESOURCE DOCUMENTATION
+ * =========================================================
+ */
+
+model ResourceDocumentation {
+  id                String   @id @default(uuid()) @db.Uuid
+  resourceId        String   @unique @map("resource_id") @db.Uuid
+  purpose           String?  @db.Text
+  runbookUrl        String?  @map("runbook_url") @db.VarChar(1000)
+  maintenanceWindow String?  @map("maintenance_window") @db.VarChar(255)
+  warning           String?  @db.Text
+  generalNotes      String?  @map("general_notes") @db.Text
+  createdById       String   @map("created_by_id") @db.Uuid
+  updatedById       String?  @map("updated_by_id") @db.Uuid
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  resource  CloudResource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  createdBy User          @relation("DocumentationCreatedBy", fields: [createdById], references: [id])
+  updatedBy User?         @relation("DocumentationUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@index([createdById])
+  @@index([updatedById])
+  @@map("resource_documentations")
+}
+
+/**
+ * =========================================================
+ * FILE ATTACHMENT
+ * =========================================================
+ */
+
+model FileAttachment {
+  id               String   @id @default(uuid()) @db.Uuid
+  projectId        String?  @map("project_id") @db.Uuid
+  resourceId       String?  @map("resource_id") @db.Uuid
+  originalFileName String   @map("original_file_name") @db.VarChar(255)
+  storageKey       String   @map("storage_key") @db.VarChar(1000)
+  fileUrl          String?  @map("file_url") @db.VarChar(1500)
+  mimeType         String?  @map("mime_type") @db.VarChar(150)
+  fileSizeBytes    BigInt?  @map("file_size_bytes")
+  uploadedById     String   @map("uploaded_by_id") @db.Uuid
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  project    Project?       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  resource   CloudResource? @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  uploadedBy User           @relation("FileUploadedBy", fields: [uploadedById], references: [id])
+
+  @@index([projectId])
+  @@index([resourceId])
+  @@index([uploadedById])
+  @@map("file_attachments")
+}
+
+/**
+ * =========================================================
+ * ACTIVITY LOG
+ * =========================================================
+ */
+
+model ActivityLog {
+  id           String         @id @default(uuid()) @db.Uuid
+  userId       String?        @map("user_id") @db.Uuid
+  projectId    String?        @map("project_id") @db.Uuid
+  awsAccountId String?        @map("aws_account_id") @db.Uuid
+  resourceId   String?        @map("resource_id") @db.Uuid
+  action       ActivityAction
+  entityType   String         @map("entity_type") @db.VarChar(100)
+  entityId     String?        @map("entity_id") @db.Uuid
+  description  String?        @db.Text
+  oldValues    Json?          @map("old_values")
+  newValues    Json?          @map("new_values")
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz()
+
+  user       User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  project    Project?       @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  awsAccount AwsAccount?    @relation(fields: [awsAccountId], references: [id], onDelete: SetNull)
+  resource   CloudResource? @relation(fields: [resourceId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([awsAccountId])
+  @@index([resourceId])
+  @@index([action])
+  @@index([entityType])
+  @@index([createdAt])
+  @@map("activity_logs")
+}
+
+/**
+ * =========================================================
+ * SYNC JOB
+ * =========================================================
+ */
+
+model SyncJob {
+  id              String     @id @default(uuid()) @db.Uuid
+  awsAccountId    String     @map("aws_account_id") @db.Uuid
+  syncType        SyncType   @map("sync_type")
+  status          SyncStatus @default(RUNNING)
+  region          String?    @db.VarChar(50)
+  startedAt       DateTime   @default(now()) @map("started_at") @db.Timestamptz()
+  completedAt     DateTime?  @map("completed_at") @db.Timestamptz()
+  recordsReceived Int        @default(0) @map("records_received")
+  recordsCreated  Int        @default(0) @map("records_created")
+  recordsUpdated  Int        @default(0) @map("records_updated")
+  recordsFailed   Int        @default(0) @map("records_failed")
+  errorMessage    String?    @map("error_message") @db.Text
+  triggeredById   String?    @map("triggered_by_id") @db.Uuid
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz()
+
+  awsAccount  AwsAccount @relation(fields: [awsAccountId], references: [id])
+  triggeredBy User?      @relation("SyncTriggeredBy", fields: [triggeredById], references: [id], onDelete: SetNull)
+
+  @@index([awsAccountId])
+  @@index([syncType])
+  @@index([status])
+  @@index([createdAt])
+  @@map("sync_jobs")
+}
