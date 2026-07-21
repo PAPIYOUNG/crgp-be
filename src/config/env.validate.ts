@@ -5,7 +5,10 @@ const envSchema = z.object({
   PORT: z.coerce.number().int().max(65535).positive(),
   DATABASE_URL: z.url(),
   JWT_SECRET: z.string().min(32),
-  JWT_EXPIRE_IN: z.coerce.number().int().positive()
+  JWT_EXPIRE_IN: z.coerce.number().int().positive(),
+  CLOUDINARY_CLOUD_NAME: z.string().min(1),
+  CLOUDINARY_API_KEY: z.string().min(1),
+  CLOUDINARY_API_SECRET: z.string().min(1)
 });
 
 export function validate(config: Record<string, any>) {

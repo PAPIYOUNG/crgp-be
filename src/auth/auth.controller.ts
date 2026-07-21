@@ -4,9 +4,7 @@ import { LoginDto } from '@/auth/dto/login.dto';
 import { RegisterDto } from '@/auth/dto/register.dto';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { Public } from '@/common/decorators/public.decorator';
-import { Roles } from '@/common/decorators/role.decorator';
 import { MessageResponseDto } from '@/common/dto/message-response.sto';
-import { SystemRole } from '@/database/generated/prisma/client';
 import { UserResponseDto } from '@/user/types/user.response.dto';
 import {
   Body,

@@ -5,12 +5,14 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { UserCreateInput } from './types/user.type';
 import { User } from '@/database/generated/prisma/client';
 import { UserGetPayload } from '@/database/generated/prisma/internal/prismaNamespaceBrowser';
+import { CloudinaryService } from '@/infrastructure/upload/cloudinary.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly bcrypt: BcryptService
+    private readonly bcrypt: BcryptService,
+    private readonly cloudinary: CloudinaryService
   ) {}
 
   async createUser(input: UserCreateInput): Promise<void> {
@@ -43,6 +45,26 @@ export class UserService {
   ): Promise<UserGetPayload<{ omit: { passwordHash: true } }> | null> {
     return this.prisma.user.findUnique({
       where: { id },
+      omit: { passwordHash: true }
+    });
+  }
+
+  async uploadAvatar(
+    userId: string,
+    avatar: Express.Multer.File
+  ): Promise<string> {
+    const avatarUrl = await this.cloudinary.upload(avatar);
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { avatarUrl }
+    });
+    return avatarUrl;
+  }
+
+  async getAllUsers(): Promise<
+    UserGetPayload<{ omit: { passwordHash: true } }>[]
+  > {
+    return this.prisma.user.findMany({
       omit: { passwordHash: true }
     });
   }

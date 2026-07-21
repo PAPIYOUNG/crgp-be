@@ -22,6 +22,8 @@ export class AuthService {
     return await this.userService.createUser(data);
   }
   async login(data: LoginDto): Promise<LoginResponseDto> {
+    console.log('login dto:', data);
+
     const user = await this.userService.getUserByEmail(data.email);
 
     if (!user) {
