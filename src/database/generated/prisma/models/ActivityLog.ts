@@ -27,35 +27,32 @@ export type AggregateActivityLog = {
 export type ActivityLogMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  projectId: string | null
-  awsAccountId: string | null
-  resourceId: string | null
   action: $Enums.ActivityAction | null
-  entityType: string | null
+  entityType: $Enums.ActivityEntityType | null
   entityId: string | null
   description: string | null
   createdAt: Date | null
+  projectId: string | null
+  awsAccountId: string | null
+  cloudResourceId: string | null
 }
 
 export type ActivityLogMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  projectId: string | null
-  awsAccountId: string | null
-  resourceId: string | null
   action: $Enums.ActivityAction | null
-  entityType: string | null
+  entityType: $Enums.ActivityEntityType | null
   entityId: string | null
   description: string | null
   createdAt: Date | null
+  projectId: string | null
+  awsAccountId: string | null
+  cloudResourceId: string | null
 }
 
 export type ActivityLogCountAggregateOutputType = {
   id: number
   userId: number
-  projectId: number
-  awsAccountId: number
-  resourceId: number
   action: number
   entityType: number
   entityId: number
@@ -63,6 +60,9 @@ export type ActivityLogCountAggregateOutputType = {
   oldValues: number
   newValues: number
   createdAt: number
+  projectId: number
+  awsAccountId: number
+  cloudResourceId: number
   _all: number
 }
 
@@ -70,35 +70,32 @@ export type ActivityLogCountAggregateOutputType = {
 export type ActivityLogMinAggregateInputType = {
   id?: true
   userId?: true
-  projectId?: true
-  awsAccountId?: true
-  resourceId?: true
   action?: true
   entityType?: true
   entityId?: true
   description?: true
   createdAt?: true
+  projectId?: true
+  awsAccountId?: true
+  cloudResourceId?: true
 }
 
 export type ActivityLogMaxAggregateInputType = {
   id?: true
   userId?: true
-  projectId?: true
-  awsAccountId?: true
-  resourceId?: true
   action?: true
   entityType?: true
   entityId?: true
   description?: true
   createdAt?: true
+  projectId?: true
+  awsAccountId?: true
+  cloudResourceId?: true
 }
 
 export type ActivityLogCountAggregateInputType = {
   id?: true
   userId?: true
-  projectId?: true
-  awsAccountId?: true
-  resourceId?: true
   action?: true
   entityType?: true
   entityId?: true
@@ -106,6 +103,9 @@ export type ActivityLogCountAggregateInputType = {
   oldValues?: true
   newValues?: true
   createdAt?: true
+  projectId?: true
+  awsAccountId?: true
+  cloudResourceId?: true
   _all?: true
 }
 
@@ -184,16 +184,16 @@ export type ActivityLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type ActivityLogGroupByOutputType = {
   id: string
   userId: string | null
-  projectId: string | null
-  awsAccountId: string | null
-  resourceId: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId: string | null
   description: string | null
   oldValues: runtime.JsonValue | null
   newValues: runtime.JsonValue | null
   createdAt: Date
+  projectId: string | null
+  awsAccountId: string | null
+  cloudResourceId: string | null
   _count: ActivityLogCountAggregateOutputType | null
   _min: ActivityLogMinAggregateOutputType | null
   _max: ActivityLogMaxAggregateOutputType | null
@@ -220,28 +220,25 @@ export type ActivityLogWhereInput = {
   NOT?: Prisma.ActivityLogWhereInput | Prisma.ActivityLogWhereInput[]
   id?: Prisma.UuidFilter<"ActivityLog"> | string
   userId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  projectId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  awsAccountId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  resourceId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
   action?: Prisma.EnumActivityActionFilter<"ActivityLog"> | $Enums.ActivityAction
-  entityType?: Prisma.StringFilter<"ActivityLog"> | string
+  entityType?: Prisma.EnumActivityEntityTypeFilter<"ActivityLog"> | $Enums.ActivityEntityType
   entityId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
   description?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
   oldValues?: Prisma.JsonNullableFilter<"ActivityLog">
   newValues?: Prisma.JsonNullableFilter<"ActivityLog">
   createdAt?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
+  projectId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
+  awsAccountId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
+  cloudResourceId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   awsAccount?: Prisma.XOR<Prisma.AwsAccountNullableScalarRelationFilter, Prisma.AwsAccountWhereInput> | null
-  resource?: Prisma.XOR<Prisma.CloudResourceNullableScalarRelationFilter, Prisma.CloudResourceWhereInput> | null
+  cloudResource?: Prisma.XOR<Prisma.CloudResourceNullableScalarRelationFilter, Prisma.CloudResourceWhereInput> | null
 }
 
 export type ActivityLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
-  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
-  awsAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
-  resourceId?: Prisma.SortOrderInput | Prisma.SortOrder
   action?: Prisma.SortOrder
   entityType?: Prisma.SortOrder
   entityId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -249,10 +246,13 @@ export type ActivityLogOrderByWithRelationInput = {
   oldValues?: Prisma.SortOrderInput | Prisma.SortOrder
   newValues?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  awsAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  cloudResourceId?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   project?: Prisma.ProjectOrderByWithRelationInput
   awsAccount?: Prisma.AwsAccountOrderByWithRelationInput
-  resource?: Prisma.CloudResourceOrderByWithRelationInput
+  cloudResource?: Prisma.CloudResourceOrderByWithRelationInput
 }
 
 export type ActivityLogWhereUniqueInput = Prisma.AtLeast<{
@@ -261,28 +261,25 @@ export type ActivityLogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ActivityLogWhereInput[]
   NOT?: Prisma.ActivityLogWhereInput | Prisma.ActivityLogWhereInput[]
   userId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  projectId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  awsAccountId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  resourceId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
   action?: Prisma.EnumActivityActionFilter<"ActivityLog"> | $Enums.ActivityAction
-  entityType?: Prisma.StringFilter<"ActivityLog"> | string
+  entityType?: Prisma.EnumActivityEntityTypeFilter<"ActivityLog"> | $Enums.ActivityEntityType
   entityId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
   description?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
   oldValues?: Prisma.JsonNullableFilter<"ActivityLog">
   newValues?: Prisma.JsonNullableFilter<"ActivityLog">
   createdAt?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
+  projectId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
+  awsAccountId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
+  cloudResourceId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   awsAccount?: Prisma.XOR<Prisma.AwsAccountNullableScalarRelationFilter, Prisma.AwsAccountWhereInput> | null
-  resource?: Prisma.XOR<Prisma.CloudResourceNullableScalarRelationFilter, Prisma.CloudResourceWhereInput> | null
+  cloudResource?: Prisma.XOR<Prisma.CloudResourceNullableScalarRelationFilter, Prisma.CloudResourceWhereInput> | null
 }, "id">
 
 export type ActivityLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
-  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
-  awsAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
-  resourceId?: Prisma.SortOrderInput | Prisma.SortOrder
   action?: Prisma.SortOrder
   entityType?: Prisma.SortOrder
   entityId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -290,6 +287,9 @@ export type ActivityLogOrderByWithAggregationInput = {
   oldValues?: Prisma.SortOrderInput | Prisma.SortOrder
   newValues?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  awsAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  cloudResourceId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ActivityLogCountOrderByAggregateInput
   _max?: Prisma.ActivityLogMaxOrderByAggregateInput
   _min?: Prisma.ActivityLogMinOrderByAggregateInput
@@ -301,22 +301,22 @@ export type ActivityLogScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ActivityLogScalarWhereWithAggregatesInput | Prisma.ActivityLogScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"ActivityLog"> | string
   userId?: Prisma.UuidNullableWithAggregatesFilter<"ActivityLog"> | string | null
-  projectId?: Prisma.UuidNullableWithAggregatesFilter<"ActivityLog"> | string | null
-  awsAccountId?: Prisma.UuidNullableWithAggregatesFilter<"ActivityLog"> | string | null
-  resourceId?: Prisma.UuidNullableWithAggregatesFilter<"ActivityLog"> | string | null
   action?: Prisma.EnumActivityActionWithAggregatesFilter<"ActivityLog"> | $Enums.ActivityAction
-  entityType?: Prisma.StringWithAggregatesFilter<"ActivityLog"> | string
+  entityType?: Prisma.EnumActivityEntityTypeWithAggregatesFilter<"ActivityLog"> | $Enums.ActivityEntityType
   entityId?: Prisma.UuidNullableWithAggregatesFilter<"ActivityLog"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"ActivityLog"> | string | null
   oldValues?: Prisma.JsonNullableWithAggregatesFilter<"ActivityLog">
   newValues?: Prisma.JsonNullableWithAggregatesFilter<"ActivityLog">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ActivityLog"> | Date | string
+  projectId?: Prisma.UuidNullableWithAggregatesFilter<"ActivityLog"> | string | null
+  awsAccountId?: Prisma.UuidNullableWithAggregatesFilter<"ActivityLog"> | string | null
+  cloudResourceId?: Prisma.UuidNullableWithAggregatesFilter<"ActivityLog"> | string | null
 }
 
 export type ActivityLogCreateInput = {
   id?: string
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -325,28 +325,28 @@ export type ActivityLogCreateInput = {
   user?: Prisma.UserCreateNestedOneWithoutActivityLogsInput
   project?: Prisma.ProjectCreateNestedOneWithoutActivityLogsInput
   awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutActivityLogsInput
-  resource?: Prisma.CloudResourceCreateNestedOneWithoutActivityLogsInput
+  cloudResource?: Prisma.CloudResourceCreateNestedOneWithoutActivityLogsInput
 }
 
 export type ActivityLogUncheckedCreateInput = {
   id?: string
   userId?: string | null
-  projectId?: string | null
-  awsAccountId?: string | null
-  resourceId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  projectId?: string | null
+  awsAccountId?: string | null
+  cloudResourceId?: string | null
 }
 
 export type ActivityLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -355,43 +355,43 @@ export type ActivityLogUpdateInput = {
   user?: Prisma.UserUpdateOneWithoutActivityLogsNestedInput
   project?: Prisma.ProjectUpdateOneWithoutActivityLogsNestedInput
   awsAccount?: Prisma.AwsAccountUpdateOneWithoutActivityLogsNestedInput
-  resource?: Prisma.CloudResourceUpdateOneWithoutActivityLogsNestedInput
+  cloudResource?: Prisma.CloudResourceUpdateOneWithoutActivityLogsNestedInput
 }
 
 export type ActivityLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cloudResourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ActivityLogCreateManyInput = {
   id?: string
   userId?: string | null
-  projectId?: string | null
-  awsAccountId?: string | null
-  resourceId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  projectId?: string | null
+  awsAccountId?: string | null
+  cloudResourceId?: string | null
 }
 
 export type ActivityLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -402,16 +402,16 @@ export type ActivityLogUpdateManyMutationInput = {
 export type ActivityLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cloudResourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ActivityLogListRelationFilter = {
@@ -427,9 +427,6 @@ export type ActivityLogOrderByRelationAggregateInput = {
 export type ActivityLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  projectId?: Prisma.SortOrder
-  awsAccountId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
   action?: Prisma.SortOrder
   entityType?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
@@ -437,32 +434,35 @@ export type ActivityLogCountOrderByAggregateInput = {
   oldValues?: Prisma.SortOrder
   newValues?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  awsAccountId?: Prisma.SortOrder
+  cloudResourceId?: Prisma.SortOrder
 }
 
 export type ActivityLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  projectId?: Prisma.SortOrder
-  awsAccountId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
   action?: Prisma.SortOrder
   entityType?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  awsAccountId?: Prisma.SortOrder
+  cloudResourceId?: Prisma.SortOrder
 }
 
 export type ActivityLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  projectId?: Prisma.SortOrder
-  awsAccountId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
   action?: Prisma.SortOrder
   entityType?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  awsAccountId?: Prisma.SortOrder
+  cloudResourceId?: Prisma.SortOrder
 }
 
 export type ActivityLogCreateNestedManyWithoutUserInput = {
@@ -591,45 +591,45 @@ export type ActivityLogUncheckedUpdateManyWithoutAwsAccountNestedInput = {
   deleteMany?: Prisma.ActivityLogScalarWhereInput | Prisma.ActivityLogScalarWhereInput[]
 }
 
-export type ActivityLogCreateNestedManyWithoutResourceInput = {
-  create?: Prisma.XOR<Prisma.ActivityLogCreateWithoutResourceInput, Prisma.ActivityLogUncheckedCreateWithoutResourceInput> | Prisma.ActivityLogCreateWithoutResourceInput[] | Prisma.ActivityLogUncheckedCreateWithoutResourceInput[]
-  connectOrCreate?: Prisma.ActivityLogCreateOrConnectWithoutResourceInput | Prisma.ActivityLogCreateOrConnectWithoutResourceInput[]
-  createMany?: Prisma.ActivityLogCreateManyResourceInputEnvelope
+export type ActivityLogCreateNestedManyWithoutCloudResourceInput = {
+  create?: Prisma.XOR<Prisma.ActivityLogCreateWithoutCloudResourceInput, Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput> | Prisma.ActivityLogCreateWithoutCloudResourceInput[] | Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput[]
+  connectOrCreate?: Prisma.ActivityLogCreateOrConnectWithoutCloudResourceInput | Prisma.ActivityLogCreateOrConnectWithoutCloudResourceInput[]
+  createMany?: Prisma.ActivityLogCreateManyCloudResourceInputEnvelope
   connect?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
 }
 
-export type ActivityLogUncheckedCreateNestedManyWithoutResourceInput = {
-  create?: Prisma.XOR<Prisma.ActivityLogCreateWithoutResourceInput, Prisma.ActivityLogUncheckedCreateWithoutResourceInput> | Prisma.ActivityLogCreateWithoutResourceInput[] | Prisma.ActivityLogUncheckedCreateWithoutResourceInput[]
-  connectOrCreate?: Prisma.ActivityLogCreateOrConnectWithoutResourceInput | Prisma.ActivityLogCreateOrConnectWithoutResourceInput[]
-  createMany?: Prisma.ActivityLogCreateManyResourceInputEnvelope
+export type ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput = {
+  create?: Prisma.XOR<Prisma.ActivityLogCreateWithoutCloudResourceInput, Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput> | Prisma.ActivityLogCreateWithoutCloudResourceInput[] | Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput[]
+  connectOrCreate?: Prisma.ActivityLogCreateOrConnectWithoutCloudResourceInput | Prisma.ActivityLogCreateOrConnectWithoutCloudResourceInput[]
+  createMany?: Prisma.ActivityLogCreateManyCloudResourceInputEnvelope
   connect?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
 }
 
-export type ActivityLogUpdateManyWithoutResourceNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityLogCreateWithoutResourceInput, Prisma.ActivityLogUncheckedCreateWithoutResourceInput> | Prisma.ActivityLogCreateWithoutResourceInput[] | Prisma.ActivityLogUncheckedCreateWithoutResourceInput[]
-  connectOrCreate?: Prisma.ActivityLogCreateOrConnectWithoutResourceInput | Prisma.ActivityLogCreateOrConnectWithoutResourceInput[]
-  upsert?: Prisma.ActivityLogUpsertWithWhereUniqueWithoutResourceInput | Prisma.ActivityLogUpsertWithWhereUniqueWithoutResourceInput[]
-  createMany?: Prisma.ActivityLogCreateManyResourceInputEnvelope
+export type ActivityLogUpdateManyWithoutCloudResourceNestedInput = {
+  create?: Prisma.XOR<Prisma.ActivityLogCreateWithoutCloudResourceInput, Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput> | Prisma.ActivityLogCreateWithoutCloudResourceInput[] | Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput[]
+  connectOrCreate?: Prisma.ActivityLogCreateOrConnectWithoutCloudResourceInput | Prisma.ActivityLogCreateOrConnectWithoutCloudResourceInput[]
+  upsert?: Prisma.ActivityLogUpsertWithWhereUniqueWithoutCloudResourceInput | Prisma.ActivityLogUpsertWithWhereUniqueWithoutCloudResourceInput[]
+  createMany?: Prisma.ActivityLogCreateManyCloudResourceInputEnvelope
   set?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
   disconnect?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
   delete?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
   connect?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
-  update?: Prisma.ActivityLogUpdateWithWhereUniqueWithoutResourceInput | Prisma.ActivityLogUpdateWithWhereUniqueWithoutResourceInput[]
-  updateMany?: Prisma.ActivityLogUpdateManyWithWhereWithoutResourceInput | Prisma.ActivityLogUpdateManyWithWhereWithoutResourceInput[]
+  update?: Prisma.ActivityLogUpdateWithWhereUniqueWithoutCloudResourceInput | Prisma.ActivityLogUpdateWithWhereUniqueWithoutCloudResourceInput[]
+  updateMany?: Prisma.ActivityLogUpdateManyWithWhereWithoutCloudResourceInput | Prisma.ActivityLogUpdateManyWithWhereWithoutCloudResourceInput[]
   deleteMany?: Prisma.ActivityLogScalarWhereInput | Prisma.ActivityLogScalarWhereInput[]
 }
 
-export type ActivityLogUncheckedUpdateManyWithoutResourceNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityLogCreateWithoutResourceInput, Prisma.ActivityLogUncheckedCreateWithoutResourceInput> | Prisma.ActivityLogCreateWithoutResourceInput[] | Prisma.ActivityLogUncheckedCreateWithoutResourceInput[]
-  connectOrCreate?: Prisma.ActivityLogCreateOrConnectWithoutResourceInput | Prisma.ActivityLogCreateOrConnectWithoutResourceInput[]
-  upsert?: Prisma.ActivityLogUpsertWithWhereUniqueWithoutResourceInput | Prisma.ActivityLogUpsertWithWhereUniqueWithoutResourceInput[]
-  createMany?: Prisma.ActivityLogCreateManyResourceInputEnvelope
+export type ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput = {
+  create?: Prisma.XOR<Prisma.ActivityLogCreateWithoutCloudResourceInput, Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput> | Prisma.ActivityLogCreateWithoutCloudResourceInput[] | Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput[]
+  connectOrCreate?: Prisma.ActivityLogCreateOrConnectWithoutCloudResourceInput | Prisma.ActivityLogCreateOrConnectWithoutCloudResourceInput[]
+  upsert?: Prisma.ActivityLogUpsertWithWhereUniqueWithoutCloudResourceInput | Prisma.ActivityLogUpsertWithWhereUniqueWithoutCloudResourceInput[]
+  createMany?: Prisma.ActivityLogCreateManyCloudResourceInputEnvelope
   set?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
   disconnect?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
   delete?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
   connect?: Prisma.ActivityLogWhereUniqueInput | Prisma.ActivityLogWhereUniqueInput[]
-  update?: Prisma.ActivityLogUpdateWithWhereUniqueWithoutResourceInput | Prisma.ActivityLogUpdateWithWhereUniqueWithoutResourceInput[]
-  updateMany?: Prisma.ActivityLogUpdateManyWithWhereWithoutResourceInput | Prisma.ActivityLogUpdateManyWithWhereWithoutResourceInput[]
+  update?: Prisma.ActivityLogUpdateWithWhereUniqueWithoutCloudResourceInput | Prisma.ActivityLogUpdateWithWhereUniqueWithoutCloudResourceInput[]
+  updateMany?: Prisma.ActivityLogUpdateManyWithWhereWithoutCloudResourceInput | Prisma.ActivityLogUpdateManyWithWhereWithoutCloudResourceInput[]
   deleteMany?: Prisma.ActivityLogScalarWhereInput | Prisma.ActivityLogScalarWhereInput[]
 }
 
@@ -637,10 +637,14 @@ export type EnumActivityActionFieldUpdateOperationsInput = {
   set?: $Enums.ActivityAction
 }
 
+export type EnumActivityEntityTypeFieldUpdateOperationsInput = {
+  set?: $Enums.ActivityEntityType
+}
+
 export type ActivityLogCreateWithoutUserInput = {
   id?: string
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -648,21 +652,21 @@ export type ActivityLogCreateWithoutUserInput = {
   createdAt?: Date | string
   project?: Prisma.ProjectCreateNestedOneWithoutActivityLogsInput
   awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutActivityLogsInput
-  resource?: Prisma.CloudResourceCreateNestedOneWithoutActivityLogsInput
+  cloudResource?: Prisma.CloudResourceCreateNestedOneWithoutActivityLogsInput
 }
 
 export type ActivityLogUncheckedCreateWithoutUserInput = {
   id?: string
-  projectId?: string | null
-  awsAccountId?: string | null
-  resourceId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  projectId?: string | null
+  awsAccountId?: string | null
+  cloudResourceId?: string | null
 }
 
 export type ActivityLogCreateOrConnectWithoutUserInput = {
@@ -697,22 +701,22 @@ export type ActivityLogScalarWhereInput = {
   NOT?: Prisma.ActivityLogScalarWhereInput | Prisma.ActivityLogScalarWhereInput[]
   id?: Prisma.UuidFilter<"ActivityLog"> | string
   userId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  projectId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  awsAccountId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
-  resourceId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
   action?: Prisma.EnumActivityActionFilter<"ActivityLog"> | $Enums.ActivityAction
-  entityType?: Prisma.StringFilter<"ActivityLog"> | string
+  entityType?: Prisma.EnumActivityEntityTypeFilter<"ActivityLog"> | $Enums.ActivityEntityType
   entityId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
   description?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
   oldValues?: Prisma.JsonNullableFilter<"ActivityLog">
   newValues?: Prisma.JsonNullableFilter<"ActivityLog">
   createdAt?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
+  projectId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
+  awsAccountId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
+  cloudResourceId?: Prisma.UuidNullableFilter<"ActivityLog"> | string | null
 }
 
 export type ActivityLogCreateWithoutProjectInput = {
   id?: string
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -720,21 +724,21 @@ export type ActivityLogCreateWithoutProjectInput = {
   createdAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutActivityLogsInput
   awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutActivityLogsInput
-  resource?: Prisma.CloudResourceCreateNestedOneWithoutActivityLogsInput
+  cloudResource?: Prisma.CloudResourceCreateNestedOneWithoutActivityLogsInput
 }
 
 export type ActivityLogUncheckedCreateWithoutProjectInput = {
   id?: string
   userId?: string | null
-  awsAccountId?: string | null
-  resourceId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  awsAccountId?: string | null
+  cloudResourceId?: string | null
 }
 
 export type ActivityLogCreateOrConnectWithoutProjectInput = {
@@ -766,7 +770,7 @@ export type ActivityLogUpdateManyWithWhereWithoutProjectInput = {
 export type ActivityLogCreateWithoutAwsAccountInput = {
   id?: string
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -774,21 +778,21 @@ export type ActivityLogCreateWithoutAwsAccountInput = {
   createdAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutActivityLogsInput
   project?: Prisma.ProjectCreateNestedOneWithoutActivityLogsInput
-  resource?: Prisma.CloudResourceCreateNestedOneWithoutActivityLogsInput
+  cloudResource?: Prisma.CloudResourceCreateNestedOneWithoutActivityLogsInput
 }
 
 export type ActivityLogUncheckedCreateWithoutAwsAccountInput = {
   id?: string
   userId?: string | null
-  projectId?: string | null
-  resourceId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  projectId?: string | null
+  cloudResourceId?: string | null
 }
 
 export type ActivityLogCreateOrConnectWithoutAwsAccountInput = {
@@ -817,10 +821,10 @@ export type ActivityLogUpdateManyWithWhereWithoutAwsAccountInput = {
   data: Prisma.XOR<Prisma.ActivityLogUpdateManyMutationInput, Prisma.ActivityLogUncheckedUpdateManyWithoutAwsAccountInput>
 }
 
-export type ActivityLogCreateWithoutResourceInput = {
+export type ActivityLogCreateWithoutCloudResourceInput = {
   id?: string
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -831,64 +835,64 @@ export type ActivityLogCreateWithoutResourceInput = {
   awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutActivityLogsInput
 }
 
-export type ActivityLogUncheckedCreateWithoutResourceInput = {
+export type ActivityLogUncheckedCreateWithoutCloudResourceInput = {
   id?: string
   userId?: string | null
-  projectId?: string | null
-  awsAccountId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  projectId?: string | null
+  awsAccountId?: string | null
 }
 
-export type ActivityLogCreateOrConnectWithoutResourceInput = {
+export type ActivityLogCreateOrConnectWithoutCloudResourceInput = {
   where: Prisma.ActivityLogWhereUniqueInput
-  create: Prisma.XOR<Prisma.ActivityLogCreateWithoutResourceInput, Prisma.ActivityLogUncheckedCreateWithoutResourceInput>
+  create: Prisma.XOR<Prisma.ActivityLogCreateWithoutCloudResourceInput, Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput>
 }
 
-export type ActivityLogCreateManyResourceInputEnvelope = {
-  data: Prisma.ActivityLogCreateManyResourceInput | Prisma.ActivityLogCreateManyResourceInput[]
+export type ActivityLogCreateManyCloudResourceInputEnvelope = {
+  data: Prisma.ActivityLogCreateManyCloudResourceInput | Prisma.ActivityLogCreateManyCloudResourceInput[]
   skipDuplicates?: boolean
 }
 
-export type ActivityLogUpsertWithWhereUniqueWithoutResourceInput = {
+export type ActivityLogUpsertWithWhereUniqueWithoutCloudResourceInput = {
   where: Prisma.ActivityLogWhereUniqueInput
-  update: Prisma.XOR<Prisma.ActivityLogUpdateWithoutResourceInput, Prisma.ActivityLogUncheckedUpdateWithoutResourceInput>
-  create: Prisma.XOR<Prisma.ActivityLogCreateWithoutResourceInput, Prisma.ActivityLogUncheckedCreateWithoutResourceInput>
+  update: Prisma.XOR<Prisma.ActivityLogUpdateWithoutCloudResourceInput, Prisma.ActivityLogUncheckedUpdateWithoutCloudResourceInput>
+  create: Prisma.XOR<Prisma.ActivityLogCreateWithoutCloudResourceInput, Prisma.ActivityLogUncheckedCreateWithoutCloudResourceInput>
 }
 
-export type ActivityLogUpdateWithWhereUniqueWithoutResourceInput = {
+export type ActivityLogUpdateWithWhereUniqueWithoutCloudResourceInput = {
   where: Prisma.ActivityLogWhereUniqueInput
-  data: Prisma.XOR<Prisma.ActivityLogUpdateWithoutResourceInput, Prisma.ActivityLogUncheckedUpdateWithoutResourceInput>
+  data: Prisma.XOR<Prisma.ActivityLogUpdateWithoutCloudResourceInput, Prisma.ActivityLogUncheckedUpdateWithoutCloudResourceInput>
 }
 
-export type ActivityLogUpdateManyWithWhereWithoutResourceInput = {
+export type ActivityLogUpdateManyWithWhereWithoutCloudResourceInput = {
   where: Prisma.ActivityLogScalarWhereInput
-  data: Prisma.XOR<Prisma.ActivityLogUpdateManyMutationInput, Prisma.ActivityLogUncheckedUpdateManyWithoutResourceInput>
+  data: Prisma.XOR<Prisma.ActivityLogUpdateManyMutationInput, Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceInput>
 }
 
 export type ActivityLogCreateManyUserInput = {
   id?: string
-  projectId?: string | null
-  awsAccountId?: string | null
-  resourceId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  projectId?: string | null
+  awsAccountId?: string | null
+  cloudResourceId?: string | null
 }
 
 export type ActivityLogUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -896,55 +900,55 @@ export type ActivityLogUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneWithoutActivityLogsNestedInput
   awsAccount?: Prisma.AwsAccountUpdateOneWithoutActivityLogsNestedInput
-  resource?: Prisma.CloudResourceUpdateOneWithoutActivityLogsNestedInput
+  cloudResource?: Prisma.CloudResourceUpdateOneWithoutActivityLogsNestedInput
 }
 
 export type ActivityLogUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cloudResourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ActivityLogUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cloudResourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ActivityLogCreateManyProjectInput = {
   id?: string
   userId?: string | null
-  awsAccountId?: string | null
-  resourceId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  awsAccountId?: string | null
+  cloudResourceId?: string | null
 }
 
 export type ActivityLogUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -952,55 +956,55 @@ export type ActivityLogUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutActivityLogsNestedInput
   awsAccount?: Prisma.AwsAccountUpdateOneWithoutActivityLogsNestedInput
-  resource?: Prisma.CloudResourceUpdateOneWithoutActivityLogsNestedInput
+  cloudResource?: Prisma.CloudResourceUpdateOneWithoutActivityLogsNestedInput
 }
 
 export type ActivityLogUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cloudResourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ActivityLogUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cloudResourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ActivityLogCreateManyAwsAccountInput = {
   id?: string
   userId?: string | null
-  projectId?: string | null
-  resourceId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  projectId?: string | null
+  cloudResourceId?: string | null
 }
 
 export type ActivityLogUpdateWithoutAwsAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1008,55 +1012,55 @@ export type ActivityLogUpdateWithoutAwsAccountInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutActivityLogsNestedInput
   project?: Prisma.ProjectUpdateOneWithoutActivityLogsNestedInput
-  resource?: Prisma.CloudResourceUpdateOneWithoutActivityLogsNestedInput
+  cloudResource?: Prisma.CloudResourceUpdateOneWithoutActivityLogsNestedInput
 }
 
 export type ActivityLogUncheckedUpdateWithoutAwsAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cloudResourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ActivityLogUncheckedUpdateManyWithoutAwsAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cloudResourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type ActivityLogCreateManyResourceInput = {
+export type ActivityLogCreateManyCloudResourceInput = {
   id?: string
   userId?: string | null
-  projectId?: string | null
-  awsAccountId?: string | null
   action: $Enums.ActivityAction
-  entityType: string
+  entityType: $Enums.ActivityEntityType
   entityId?: string | null
   description?: string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  projectId?: string | null
+  awsAccountId?: string | null
 }
 
-export type ActivityLogUpdateWithoutResourceInput = {
+export type ActivityLogUpdateWithoutCloudResourceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1067,32 +1071,32 @@ export type ActivityLogUpdateWithoutResourceInput = {
   awsAccount?: Prisma.AwsAccountUpdateOneWithoutActivityLogsNestedInput
 }
 
-export type ActivityLogUncheckedUpdateWithoutResourceInput = {
+export type ActivityLogUncheckedUpdateWithoutCloudResourceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type ActivityLogUncheckedUpdateManyWithoutResourceInput = {
+export type ActivityLogUncheckedUpdateManyWithoutCloudResourceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.EnumActivityActionFieldUpdateOperationsInput | $Enums.ActivityAction
-  entityType?: Prisma.StringFieldUpdateOperationsInput | string
+  entityType?: Prisma.EnumActivityEntityTypeFieldUpdateOperationsInput | $Enums.ActivityEntityType
   entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oldValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   newValues?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1100,9 +1104,6 @@ export type ActivityLogUncheckedUpdateManyWithoutResourceInput = {
 export type ActivityLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  projectId?: boolean
-  awsAccountId?: boolean
-  resourceId?: boolean
   action?: boolean
   entityType?: boolean
   entityId?: boolean
@@ -1110,18 +1111,18 @@ export type ActivityLogSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   oldValues?: boolean
   newValues?: boolean
   createdAt?: boolean
+  projectId?: boolean
+  awsAccountId?: boolean
+  cloudResourceId?: boolean
   user?: boolean | Prisma.ActivityLog$userArgs<ExtArgs>
   project?: boolean | Prisma.ActivityLog$projectArgs<ExtArgs>
   awsAccount?: boolean | Prisma.ActivityLog$awsAccountArgs<ExtArgs>
-  resource?: boolean | Prisma.ActivityLog$resourceArgs<ExtArgs>
+  cloudResource?: boolean | Prisma.ActivityLog$cloudResourceArgs<ExtArgs>
 }, ExtArgs["result"]["activityLog"]>
 
 export type ActivityLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  projectId?: boolean
-  awsAccountId?: boolean
-  resourceId?: boolean
   action?: boolean
   entityType?: boolean
   entityId?: boolean
@@ -1129,18 +1130,18 @@ export type ActivityLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   oldValues?: boolean
   newValues?: boolean
   createdAt?: boolean
+  projectId?: boolean
+  awsAccountId?: boolean
+  cloudResourceId?: boolean
   user?: boolean | Prisma.ActivityLog$userArgs<ExtArgs>
   project?: boolean | Prisma.ActivityLog$projectArgs<ExtArgs>
   awsAccount?: boolean | Prisma.ActivityLog$awsAccountArgs<ExtArgs>
-  resource?: boolean | Prisma.ActivityLog$resourceArgs<ExtArgs>
+  cloudResource?: boolean | Prisma.ActivityLog$cloudResourceArgs<ExtArgs>
 }, ExtArgs["result"]["activityLog"]>
 
 export type ActivityLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  projectId?: boolean
-  awsAccountId?: boolean
-  resourceId?: boolean
   action?: boolean
   entityType?: boolean
   entityId?: boolean
@@ -1148,18 +1149,18 @@ export type ActivityLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   oldValues?: boolean
   newValues?: boolean
   createdAt?: boolean
+  projectId?: boolean
+  awsAccountId?: boolean
+  cloudResourceId?: boolean
   user?: boolean | Prisma.ActivityLog$userArgs<ExtArgs>
   project?: boolean | Prisma.ActivityLog$projectArgs<ExtArgs>
   awsAccount?: boolean | Prisma.ActivityLog$awsAccountArgs<ExtArgs>
-  resource?: boolean | Prisma.ActivityLog$resourceArgs<ExtArgs>
+  cloudResource?: boolean | Prisma.ActivityLog$cloudResourceArgs<ExtArgs>
 }, ExtArgs["result"]["activityLog"]>
 
 export type ActivityLogSelectScalar = {
   id?: boolean
   userId?: boolean
-  projectId?: boolean
-  awsAccountId?: boolean
-  resourceId?: boolean
   action?: boolean
   entityType?: boolean
   entityId?: boolean
@@ -1167,26 +1168,29 @@ export type ActivityLogSelectScalar = {
   oldValues?: boolean
   newValues?: boolean
   createdAt?: boolean
+  projectId?: boolean
+  awsAccountId?: boolean
+  cloudResourceId?: boolean
 }
 
-export type ActivityLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "projectId" | "awsAccountId" | "resourceId" | "action" | "entityType" | "entityId" | "description" | "oldValues" | "newValues" | "createdAt", ExtArgs["result"]["activityLog"]>
+export type ActivityLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "action" | "entityType" | "entityId" | "description" | "oldValues" | "newValues" | "createdAt" | "projectId" | "awsAccountId" | "cloudResourceId", ExtArgs["result"]["activityLog"]>
 export type ActivityLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.ActivityLog$userArgs<ExtArgs>
   project?: boolean | Prisma.ActivityLog$projectArgs<ExtArgs>
   awsAccount?: boolean | Prisma.ActivityLog$awsAccountArgs<ExtArgs>
-  resource?: boolean | Prisma.ActivityLog$resourceArgs<ExtArgs>
+  cloudResource?: boolean | Prisma.ActivityLog$cloudResourceArgs<ExtArgs>
 }
 export type ActivityLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.ActivityLog$userArgs<ExtArgs>
   project?: boolean | Prisma.ActivityLog$projectArgs<ExtArgs>
   awsAccount?: boolean | Prisma.ActivityLog$awsAccountArgs<ExtArgs>
-  resource?: boolean | Prisma.ActivityLog$resourceArgs<ExtArgs>
+  cloudResource?: boolean | Prisma.ActivityLog$cloudResourceArgs<ExtArgs>
 }
 export type ActivityLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.ActivityLog$userArgs<ExtArgs>
   project?: boolean | Prisma.ActivityLog$projectArgs<ExtArgs>
   awsAccount?: boolean | Prisma.ActivityLog$awsAccountArgs<ExtArgs>
-  resource?: boolean | Prisma.ActivityLog$resourceArgs<ExtArgs>
+  cloudResource?: boolean | Prisma.ActivityLog$cloudResourceArgs<ExtArgs>
 }
 
 export type $ActivityLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1195,21 +1199,21 @@ export type $ActivityLogPayload<ExtArgs extends runtime.Types.Extensions.Interna
     user: Prisma.$UserPayload<ExtArgs> | null
     project: Prisma.$ProjectPayload<ExtArgs> | null
     awsAccount: Prisma.$AwsAccountPayload<ExtArgs> | null
-    resource: Prisma.$CloudResourcePayload<ExtArgs> | null
+    cloudResource: Prisma.$CloudResourcePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string | null
-    projectId: string | null
-    awsAccountId: string | null
-    resourceId: string | null
     action: $Enums.ActivityAction
-    entityType: string
+    entityType: $Enums.ActivityEntityType
     entityId: string | null
     description: string | null
     oldValues: runtime.JsonValue | null
     newValues: runtime.JsonValue | null
     createdAt: Date
+    projectId: string | null
+    awsAccountId: string | null
+    cloudResourceId: string | null
   }, ExtArgs["result"]["activityLog"]>
   composites: {}
 }
@@ -1607,7 +1611,7 @@ export interface Prisma__ActivityLogClient<T, Null = never, ExtArgs extends runt
   user<T extends Prisma.ActivityLog$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ActivityLog$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   project<T extends Prisma.ActivityLog$projectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ActivityLog$projectArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   awsAccount<T extends Prisma.ActivityLog$awsAccountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ActivityLog$awsAccountArgs<ExtArgs>>): Prisma.Prisma__AwsAccountClient<runtime.Types.Result.GetResult<Prisma.$AwsAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  resource<T extends Prisma.ActivityLog$resourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ActivityLog$resourceArgs<ExtArgs>>): Prisma.Prisma__CloudResourceClient<runtime.Types.Result.GetResult<Prisma.$CloudResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  cloudResource<T extends Prisma.ActivityLog$cloudResourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ActivityLog$cloudResourceArgs<ExtArgs>>): Prisma.Prisma__CloudResourceClient<runtime.Types.Result.GetResult<Prisma.$CloudResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1639,16 +1643,16 @@ export interface Prisma__ActivityLogClient<T, Null = never, ExtArgs extends runt
 export interface ActivityLogFieldRefs {
   readonly id: Prisma.FieldRef<"ActivityLog", 'String'>
   readonly userId: Prisma.FieldRef<"ActivityLog", 'String'>
-  readonly projectId: Prisma.FieldRef<"ActivityLog", 'String'>
-  readonly awsAccountId: Prisma.FieldRef<"ActivityLog", 'String'>
-  readonly resourceId: Prisma.FieldRef<"ActivityLog", 'String'>
   readonly action: Prisma.FieldRef<"ActivityLog", 'ActivityAction'>
-  readonly entityType: Prisma.FieldRef<"ActivityLog", 'String'>
+  readonly entityType: Prisma.FieldRef<"ActivityLog", 'ActivityEntityType'>
   readonly entityId: Prisma.FieldRef<"ActivityLog", 'String'>
   readonly description: Prisma.FieldRef<"ActivityLog", 'String'>
   readonly oldValues: Prisma.FieldRef<"ActivityLog", 'Json'>
   readonly newValues: Prisma.FieldRef<"ActivityLog", 'Json'>
   readonly createdAt: Prisma.FieldRef<"ActivityLog", 'DateTime'>
+  readonly projectId: Prisma.FieldRef<"ActivityLog", 'String'>
+  readonly awsAccountId: Prisma.FieldRef<"ActivityLog", 'String'>
+  readonly cloudResourceId: Prisma.FieldRef<"ActivityLog", 'String'>
 }
     
 
@@ -2107,9 +2111,9 @@ export type ActivityLog$awsAccountArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * ActivityLog.resource
+ * ActivityLog.cloudResource
  */
-export type ActivityLog$resourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ActivityLog$cloudResourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the CloudResource
    */

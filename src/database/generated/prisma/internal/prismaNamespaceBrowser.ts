@@ -135,9 +135,15 @@ export const AwsAccountScalarFieldEnum = {
   accountName: 'accountName',
   ownerDepartment: 'ownerDepartment',
   defaultRegion: 'defaultRegion',
+  roleArn: 'roleArn',
+  externalId: 'externalId',
+  connectionStatus: 'connectionStatus',
+  verifiedAt: 'verifiedAt',
+  connectionError: 'connectionError',
   isActive: 'isActive',
   lastConfigSyncedAt: 'lastConfigSyncedAt',
   lastCostSyncedAt: 'lastCostSyncedAt',
+  lastTagSyncedAt: 'lastTagSyncedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -250,16 +256,16 @@ export type FileAttachmentScalarFieldEnum = (typeof FileAttachmentScalarFieldEnu
 export const ActivityLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  projectId: 'projectId',
-  awsAccountId: 'awsAccountId',
-  resourceId: 'resourceId',
   action: 'action',
   entityType: 'entityType',
   entityId: 'entityId',
   description: 'description',
   oldValues: 'oldValues',
   newValues: 'newValues',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  projectId: 'projectId',
+  awsAccountId: 'awsAccountId',
+  cloudResourceId: 'cloudResourceId'
 } as const
 
 export type ActivityLogScalarFieldEnum = (typeof ActivityLogScalarFieldEnum)[keyof typeof ActivityLogScalarFieldEnum]

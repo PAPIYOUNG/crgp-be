@@ -464,7 +464,7 @@ export type CloudResourceCreateInput = {
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUncheckedCreateInput = {
@@ -493,7 +493,7 @@ export type CloudResourceUncheckedCreateInput = {
   costRecords?: Prisma.CostRecordUncheckedCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationUncheckedCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentUncheckedCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUpdateInput = {
@@ -522,7 +522,7 @@ export type CloudResourceUpdateInput = {
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateInput = {
@@ -551,7 +551,7 @@ export type CloudResourceUncheckedUpdateInput = {
   costRecords?: Prisma.CostRecordUncheckedUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUncheckedUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUncheckedUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceCreateManyInput = {
@@ -954,7 +954,7 @@ export type CloudResourceCreateWithoutOwnerInput = {
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUncheckedCreateWithoutOwnerInput = {
@@ -982,7 +982,7 @@ export type CloudResourceUncheckedCreateWithoutOwnerInput = {
   costRecords?: Prisma.CostRecordUncheckedCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationUncheckedCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentUncheckedCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceCreateOrConnectWithoutOwnerInput = {
@@ -1063,7 +1063,7 @@ export type CloudResourceCreateWithoutProjectInput = {
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUncheckedCreateWithoutProjectInput = {
@@ -1091,7 +1091,7 @@ export type CloudResourceUncheckedCreateWithoutProjectInput = {
   costRecords?: Prisma.CostRecordUncheckedCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationUncheckedCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentUncheckedCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceCreateOrConnectWithoutProjectInput = {
@@ -1145,7 +1145,7 @@ export type CloudResourceCreateWithoutAwsAccountInput = {
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUncheckedCreateWithoutAwsAccountInput = {
@@ -1173,7 +1173,7 @@ export type CloudResourceUncheckedCreateWithoutAwsAccountInput = {
   costRecords?: Prisma.CostRecordUncheckedCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationUncheckedCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentUncheckedCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceCreateOrConnectWithoutAwsAccountInput = {
@@ -1227,7 +1227,7 @@ export type CloudResourceCreateWithoutTagsInput = {
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUncheckedCreateWithoutTagsInput = {
@@ -1255,7 +1255,7 @@ export type CloudResourceUncheckedCreateWithoutTagsInput = {
   costRecords?: Prisma.CostRecordUncheckedCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationUncheckedCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentUncheckedCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceCreateOrConnectWithoutTagsInput = {
@@ -1299,7 +1299,7 @@ export type CloudResourceUpdateWithoutTagsInput = {
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateWithoutTagsInput = {
@@ -1327,7 +1327,7 @@ export type CloudResourceUncheckedUpdateWithoutTagsInput = {
   costRecords?: Prisma.CostRecordUncheckedUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUncheckedUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUncheckedUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceCreateWithoutCostRecordsInput = {
@@ -1355,7 +1355,7 @@ export type CloudResourceCreateWithoutCostRecordsInput = {
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUncheckedCreateWithoutCostRecordsInput = {
@@ -1383,7 +1383,7 @@ export type CloudResourceUncheckedCreateWithoutCostRecordsInput = {
   tags?: Prisma.ResourceTagUncheckedCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationUncheckedCreateNestedOneWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentUncheckedCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceCreateOrConnectWithoutCostRecordsInput = {
@@ -1427,7 +1427,7 @@ export type CloudResourceUpdateWithoutCostRecordsInput = {
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateWithoutCostRecordsInput = {
@@ -1455,7 +1455,7 @@ export type CloudResourceUncheckedUpdateWithoutCostRecordsInput = {
   tags?: Prisma.ResourceTagUncheckedUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUncheckedUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUncheckedUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceCreateWithoutDocumentationInput = {
@@ -1483,7 +1483,7 @@ export type CloudResourceCreateWithoutDocumentationInput = {
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUncheckedCreateWithoutDocumentationInput = {
@@ -1511,7 +1511,7 @@ export type CloudResourceUncheckedCreateWithoutDocumentationInput = {
   tags?: Prisma.ResourceTagUncheckedCreateNestedManyWithoutResourceInput
   costRecords?: Prisma.CostRecordUncheckedCreateNestedManyWithoutResourceInput
   fileAttachments?: Prisma.FileAttachmentUncheckedCreateNestedManyWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceCreateOrConnectWithoutDocumentationInput = {
@@ -1555,7 +1555,7 @@ export type CloudResourceUpdateWithoutDocumentationInput = {
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateWithoutDocumentationInput = {
@@ -1583,7 +1583,7 @@ export type CloudResourceUncheckedUpdateWithoutDocumentationInput = {
   tags?: Prisma.ResourceTagUncheckedUpdateManyWithoutResourceNestedInput
   costRecords?: Prisma.CostRecordUncheckedUpdateManyWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUncheckedUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceCreateWithoutFileAttachmentsInput = {
@@ -1611,7 +1611,7 @@ export type CloudResourceCreateWithoutFileAttachmentsInput = {
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationCreateNestedOneWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceUncheckedCreateWithoutFileAttachmentsInput = {
@@ -1639,7 +1639,7 @@ export type CloudResourceUncheckedCreateWithoutFileAttachmentsInput = {
   tags?: Prisma.ResourceTagUncheckedCreateNestedManyWithoutResourceInput
   costRecords?: Prisma.CostRecordUncheckedCreateNestedManyWithoutResourceInput
   documentation?: Prisma.ResourceDocumentationUncheckedCreateNestedOneWithoutResourceInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutResourceInput
+  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCloudResourceInput
 }
 
 export type CloudResourceCreateOrConnectWithoutFileAttachmentsInput = {
@@ -1683,7 +1683,7 @@ export type CloudResourceUpdateWithoutFileAttachmentsInput = {
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUpdateOneWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateWithoutFileAttachmentsInput = {
@@ -1711,7 +1711,7 @@ export type CloudResourceUncheckedUpdateWithoutFileAttachmentsInput = {
   tags?: Prisma.ResourceTagUncheckedUpdateManyWithoutResourceNestedInput
   costRecords?: Prisma.CostRecordUncheckedUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUncheckedUpdateOneWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceCreateWithoutActivityLogsInput = {
@@ -1890,7 +1890,7 @@ export type CloudResourceUpdateWithoutOwnerInput = {
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateWithoutOwnerInput = {
@@ -1918,7 +1918,7 @@ export type CloudResourceUncheckedUpdateWithoutOwnerInput = {
   costRecords?: Prisma.CostRecordUncheckedUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUncheckedUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUncheckedUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateManyWithoutOwnerInput = {
@@ -1992,7 +1992,7 @@ export type CloudResourceUpdateWithoutProjectInput = {
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateWithoutProjectInput = {
@@ -2020,7 +2020,7 @@ export type CloudResourceUncheckedUpdateWithoutProjectInput = {
   costRecords?: Prisma.CostRecordUncheckedUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUncheckedUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUncheckedUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateManyWithoutProjectInput = {
@@ -2094,7 +2094,7 @@ export type CloudResourceUpdateWithoutAwsAccountInput = {
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateWithoutAwsAccountInput = {
@@ -2122,7 +2122,7 @@ export type CloudResourceUncheckedUpdateWithoutAwsAccountInput = {
   costRecords?: Prisma.CostRecordUncheckedUpdateManyWithoutResourceNestedInput
   documentation?: Prisma.ResourceDocumentationUncheckedUpdateOneWithoutResourceNestedInput
   fileAttachments?: Prisma.FileAttachmentUncheckedUpdateManyWithoutResourceNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutResourceNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCloudResourceNestedInput
 }
 
 export type CloudResourceUncheckedUpdateManyWithoutAwsAccountInput = {

@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate {
       throw new BadRequestException('Invalid authorization header');
     }
     try {
-      const payload = await this.accessTokenService.verify(token);
+      const payload = await this.accessTokenService.verify(token); //payload=sub+email+role
       request.user = payload;
     } catch (error) {
       if (error instanceof TokenExpiredError) {

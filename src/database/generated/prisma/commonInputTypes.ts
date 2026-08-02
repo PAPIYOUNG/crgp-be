@@ -274,9 +274,26 @@ export type EnumProjectMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumProjectMemberRoleFilter<$PrismaModel>
 }
 
+export type EnumAwsConnectionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AwsConnectionStatus | Prisma.EnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AwsConnectionStatus[] | Prisma.ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AwsConnectionStatus[] | Prisma.ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAwsConnectionStatusFilter<$PrismaModel> | $Enums.AwsConnectionStatus
+}
+
 export type BoolFilter<$PrismaModel = never> = {
   equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
+}
+
+export type EnumAwsConnectionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AwsConnectionStatus | Prisma.EnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AwsConnectionStatus[] | Prisma.ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AwsConnectionStatus[] | Prisma.ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAwsConnectionStatusWithAggregatesFilter<$PrismaModel> | $Enums.AwsConnectionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAwsConnectionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAwsConnectionStatusFilter<$PrismaModel>
 }
 
 export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -460,6 +477,13 @@ export type EnumActivityActionFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumActivityActionFilter<$PrismaModel> | $Enums.ActivityAction
 }
 
+export type EnumActivityEntityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityEntityType | Prisma.EnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityEntityType[] | Prisma.ListEnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ActivityEntityType[] | Prisma.ListEnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumActivityEntityTypeFilter<$PrismaModel> | $Enums.ActivityEntityType
+}
+
 export type EnumActivityActionWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.ActivityAction | Prisma.EnumActivityActionFieldRefInput<$PrismaModel>
   in?: $Enums.ActivityAction[] | Prisma.ListEnumActivityActionFieldRefInput<$PrismaModel>
@@ -468,6 +492,16 @@ export type EnumActivityActionWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumActivityActionFilter<$PrismaModel>
   _max?: Prisma.NestedEnumActivityActionFilter<$PrismaModel>
+}
+
+export type EnumActivityEntityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityEntityType | Prisma.EnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityEntityType[] | Prisma.ListEnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ActivityEntityType[] | Prisma.ListEnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumActivityEntityTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityEntityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumActivityEntityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumActivityEntityTypeFilter<$PrismaModel>
 }
 
 export type EnumSyncTypeFilter<$PrismaModel = never> = {
@@ -802,9 +836,26 @@ export type NestedEnumProjectMemberRoleWithAggregatesFilter<$PrismaModel = never
   _max?: Prisma.NestedEnumProjectMemberRoleFilter<$PrismaModel>
 }
 
+export type NestedEnumAwsConnectionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AwsConnectionStatus | Prisma.EnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AwsConnectionStatus[] | Prisma.ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AwsConnectionStatus[] | Prisma.ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAwsConnectionStatusFilter<$PrismaModel> | $Enums.AwsConnectionStatus
+}
+
 export type NestedBoolFilter<$PrismaModel = never> = {
   equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
+}
+
+export type NestedEnumAwsConnectionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AwsConnectionStatus | Prisma.EnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AwsConnectionStatus[] | Prisma.ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AwsConnectionStatus[] | Prisma.ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAwsConnectionStatusWithAggregatesFilter<$PrismaModel> | $Enums.AwsConnectionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAwsConnectionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAwsConnectionStatusFilter<$PrismaModel>
 }
 
 export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -970,6 +1021,13 @@ export type NestedEnumActivityActionFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumActivityActionFilter<$PrismaModel> | $Enums.ActivityAction
 }
 
+export type NestedEnumActivityEntityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityEntityType | Prisma.EnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityEntityType[] | Prisma.ListEnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ActivityEntityType[] | Prisma.ListEnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumActivityEntityTypeFilter<$PrismaModel> | $Enums.ActivityEntityType
+}
+
 export type NestedEnumActivityActionWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.ActivityAction | Prisma.EnumActivityActionFieldRefInput<$PrismaModel>
   in?: $Enums.ActivityAction[] | Prisma.ListEnumActivityActionFieldRefInput<$PrismaModel>
@@ -978,6 +1036,16 @@ export type NestedEnumActivityActionWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumActivityActionFilter<$PrismaModel>
   _max?: Prisma.NestedEnumActivityActionFilter<$PrismaModel>
+}
+
+export type NestedEnumActivityEntityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityEntityType | Prisma.EnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityEntityType[] | Prisma.ListEnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ActivityEntityType[] | Prisma.ListEnumActivityEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumActivityEntityTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityEntityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumActivityEntityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumActivityEntityTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumSyncTypeFilter<$PrismaModel = never> = {

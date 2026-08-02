@@ -304,6 +304,7 @@ export type CostRecordOrderByWithRelationInput = {
 
 export type CostRecordWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  awsAccountId_periodStart_periodEnd_service_region?: Prisma.CostRecordAwsAccountIdPeriodStartPeriodEndServiceRegionCompoundUniqueInput
   AND?: Prisma.CostRecordWhereInput | Prisma.CostRecordWhereInput[]
   OR?: Prisma.CostRecordWhereInput[]
   NOT?: Prisma.CostRecordWhereInput | Prisma.CostRecordWhereInput[]
@@ -321,7 +322,7 @@ export type CostRecordWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"CostRecord"> | Date | string
   awsAccount?: Prisma.XOR<Prisma.AwsAccountScalarRelationFilter, Prisma.AwsAccountWhereInput>
   resource?: Prisma.XOR<Prisma.CloudResourceNullableScalarRelationFilter, Prisma.CloudResourceWhereInput> | null
-}, "id">
+}, "id" | "awsAccountId_periodStart_periodEnd_service_region">
 
 export type CostRecordOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -481,6 +482,14 @@ export type CostRecordListRelationFilter = {
 
 export type CostRecordOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type CostRecordAwsAccountIdPeriodStartPeriodEndServiceRegionCompoundUniqueInput = {
+  awsAccountId: string
+  periodStart: Date | string
+  periodEnd: Date | string
+  service: string
+  region: string
 }
 
 export type CostRecordCountOrderByAggregateInput = {

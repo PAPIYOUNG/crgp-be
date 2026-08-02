@@ -10,19 +10,41 @@ import {
   UnauthorizedException
 } from '@nestjs/common';
 import { UserResponseDto } from '@/user/types/user.response.dto';
+import { ActivityLogsService } from '@/activity-logs/activity-logs.service';
+import {
+  ActivityAction,
+  ActivityEntityType
+} from '@/database/generated/prisma/enums';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly bcrypt: BcryptService,
-    private readonly jwt: AccessTokenService
+    private readonly jwt: AccessTokenService,
+    private readonly activity: ActivityLogsService
   ) {}
   async register(data: RegisterDto) {
-    return await this.userService.createUser(data);
+    const user = await this.userService.createUser(data);
+
+    await this.activity.createActivityLog(user.id, {
+      action: ActivityAction.CREATE,
+      entityType: ActivityEntityType.USER,
+      entityId: user.id,
+      description: 'User registered',
+      newValues: {
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        department: user.department
+      }
+    });
+
+    return user;
   }
+
   async login(data: LoginDto): Promise<LoginResponseDto> {
-    console.log('login dto:', data);
+    //console.log('login dto:', data);
 
     const user = await this.userService.getUserByEmail(data.email);
 
@@ -37,6 +59,13 @@ export class AuthService {
       sub: user.id,
       email: user.email,
       role: user.role
+    });
+
+    await this.activity.createActivityLog(user.id, {
+      action: ActivityAction.LOGIN,
+      entityType: ActivityEntityType.USER,
+      entityId: user.id,
+      description: `User ${user.email} logged in`
     });
     return {
       access_token,

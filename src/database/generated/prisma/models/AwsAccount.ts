@@ -30,9 +30,15 @@ export type AwsAccountMinAggregateOutputType = {
   accountName: string | null
   ownerDepartment: $Enums.Department | null
   defaultRegion: string | null
+  roleArn: string | null
+  externalId: string | null
+  connectionStatus: $Enums.AwsConnectionStatus | null
+  verifiedAt: Date | null
+  connectionError: string | null
   isActive: boolean | null
   lastConfigSyncedAt: Date | null
   lastCostSyncedAt: Date | null
+  lastTagSyncedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -43,9 +49,15 @@ export type AwsAccountMaxAggregateOutputType = {
   accountName: string | null
   ownerDepartment: $Enums.Department | null
   defaultRegion: string | null
+  roleArn: string | null
+  externalId: string | null
+  connectionStatus: $Enums.AwsConnectionStatus | null
+  verifiedAt: Date | null
+  connectionError: string | null
   isActive: boolean | null
   lastConfigSyncedAt: Date | null
   lastCostSyncedAt: Date | null
+  lastTagSyncedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,9 +68,15 @@ export type AwsAccountCountAggregateOutputType = {
   accountName: number
   ownerDepartment: number
   defaultRegion: number
+  roleArn: number
+  externalId: number
+  connectionStatus: number
+  verifiedAt: number
+  connectionError: number
   isActive: number
   lastConfigSyncedAt: number
   lastCostSyncedAt: number
+  lastTagSyncedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -71,9 +89,15 @@ export type AwsAccountMinAggregateInputType = {
   accountName?: true
   ownerDepartment?: true
   defaultRegion?: true
+  roleArn?: true
+  externalId?: true
+  connectionStatus?: true
+  verifiedAt?: true
+  connectionError?: true
   isActive?: true
   lastConfigSyncedAt?: true
   lastCostSyncedAt?: true
+  lastTagSyncedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -84,9 +108,15 @@ export type AwsAccountMaxAggregateInputType = {
   accountName?: true
   ownerDepartment?: true
   defaultRegion?: true
+  roleArn?: true
+  externalId?: true
+  connectionStatus?: true
+  verifiedAt?: true
+  connectionError?: true
   isActive?: true
   lastConfigSyncedAt?: true
   lastCostSyncedAt?: true
+  lastTagSyncedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -97,9 +127,15 @@ export type AwsAccountCountAggregateInputType = {
   accountName?: true
   ownerDepartment?: true
   defaultRegion?: true
+  roleArn?: true
+  externalId?: true
+  connectionStatus?: true
+  verifiedAt?: true
+  connectionError?: true
   isActive?: true
   lastConfigSyncedAt?: true
   lastCostSyncedAt?: true
+  lastTagSyncedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -183,9 +219,15 @@ export type AwsAccountGroupByOutputType = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn: string | null
+  externalId: string | null
+  connectionStatus: $Enums.AwsConnectionStatus
+  verifiedAt: Date | null
+  connectionError: string | null
   isActive: boolean
   lastConfigSyncedAt: Date | null
   lastCostSyncedAt: Date | null
+  lastTagSyncedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: AwsAccountCountAggregateOutputType | null
@@ -217,9 +259,15 @@ export type AwsAccountWhereInput = {
   accountName?: Prisma.StringFilter<"AwsAccount"> | string
   ownerDepartment?: Prisma.EnumDepartmentFilter<"AwsAccount"> | $Enums.Department
   defaultRegion?: Prisma.StringFilter<"AwsAccount"> | string
+  roleArn?: Prisma.StringNullableFilter<"AwsAccount"> | string | null
+  externalId?: Prisma.StringNullableFilter<"AwsAccount"> | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFilter<"AwsAccount"> | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.DateTimeNullableFilter<"AwsAccount"> | Date | string | null
+  connectionError?: Prisma.StringNullableFilter<"AwsAccount"> | string | null
   isActive?: Prisma.BoolFilter<"AwsAccount"> | boolean
   lastConfigSyncedAt?: Prisma.DateTimeNullableFilter<"AwsAccount"> | Date | string | null
   lastCostSyncedAt?: Prisma.DateTimeNullableFilter<"AwsAccount"> | Date | string | null
+  lastTagSyncedAt?: Prisma.DateTimeNullableFilter<"AwsAccount"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"AwsAccount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AwsAccount"> | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountListRelationFilter
@@ -235,9 +283,15 @@ export type AwsAccountOrderByWithRelationInput = {
   accountName?: Prisma.SortOrder
   ownerDepartment?: Prisma.SortOrder
   defaultRegion?: Prisma.SortOrder
+  roleArn?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalId?: Prisma.SortOrderInput | Prisma.SortOrder
+  connectionStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  connectionError?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastConfigSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastCostSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastTagSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   projectAwsAccounts?: Prisma.ProjectAwsAccountOrderByRelationAggregateInput
@@ -256,9 +310,15 @@ export type AwsAccountWhereUniqueInput = Prisma.AtLeast<{
   accountName?: Prisma.StringFilter<"AwsAccount"> | string
   ownerDepartment?: Prisma.EnumDepartmentFilter<"AwsAccount"> | $Enums.Department
   defaultRegion?: Prisma.StringFilter<"AwsAccount"> | string
+  roleArn?: Prisma.StringNullableFilter<"AwsAccount"> | string | null
+  externalId?: Prisma.StringNullableFilter<"AwsAccount"> | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFilter<"AwsAccount"> | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.DateTimeNullableFilter<"AwsAccount"> | Date | string | null
+  connectionError?: Prisma.StringNullableFilter<"AwsAccount"> | string | null
   isActive?: Prisma.BoolFilter<"AwsAccount"> | boolean
   lastConfigSyncedAt?: Prisma.DateTimeNullableFilter<"AwsAccount"> | Date | string | null
   lastCostSyncedAt?: Prisma.DateTimeNullableFilter<"AwsAccount"> | Date | string | null
+  lastTagSyncedAt?: Prisma.DateTimeNullableFilter<"AwsAccount"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"AwsAccount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AwsAccount"> | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountListRelationFilter
@@ -274,9 +334,15 @@ export type AwsAccountOrderByWithAggregationInput = {
   accountName?: Prisma.SortOrder
   ownerDepartment?: Prisma.SortOrder
   defaultRegion?: Prisma.SortOrder
+  roleArn?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalId?: Prisma.SortOrderInput | Prisma.SortOrder
+  connectionStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  connectionError?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastConfigSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastCostSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastTagSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AwsAccountCountOrderByAggregateInput
@@ -293,9 +359,15 @@ export type AwsAccountScalarWhereWithAggregatesInput = {
   accountName?: Prisma.StringWithAggregatesFilter<"AwsAccount"> | string
   ownerDepartment?: Prisma.EnumDepartmentWithAggregatesFilter<"AwsAccount"> | $Enums.Department
   defaultRegion?: Prisma.StringWithAggregatesFilter<"AwsAccount"> | string
+  roleArn?: Prisma.StringNullableWithAggregatesFilter<"AwsAccount"> | string | null
+  externalId?: Prisma.StringNullableWithAggregatesFilter<"AwsAccount"> | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusWithAggregatesFilter<"AwsAccount"> | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AwsAccount"> | Date | string | null
+  connectionError?: Prisma.StringNullableWithAggregatesFilter<"AwsAccount"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"AwsAccount"> | boolean
   lastConfigSyncedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AwsAccount"> | Date | string | null
   lastCostSyncedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AwsAccount"> | Date | string | null
+  lastTagSyncedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AwsAccount"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AwsAccount"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AwsAccount"> | Date | string
 }
@@ -306,9 +378,15 @@ export type AwsAccountCreateInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountCreateNestedManyWithoutAwsAccountInput
@@ -324,9 +402,15 @@ export type AwsAccountUncheckedCreateInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedCreateNestedManyWithoutAwsAccountInput
@@ -342,9 +426,15 @@ export type AwsAccountUpdateInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUpdateManyWithoutAwsAccountNestedInput
@@ -360,9 +450,15 @@ export type AwsAccountUncheckedUpdateInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedUpdateManyWithoutAwsAccountNestedInput
@@ -378,9 +474,15 @@ export type AwsAccountCreateManyInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -391,9 +493,15 @@ export type AwsAccountUpdateManyMutationInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -404,9 +512,15 @@ export type AwsAccountUncheckedUpdateManyInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -417,9 +531,15 @@ export type AwsAccountCountOrderByAggregateInput = {
   accountName?: Prisma.SortOrder
   ownerDepartment?: Prisma.SortOrder
   defaultRegion?: Prisma.SortOrder
+  roleArn?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
+  connectionStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  connectionError?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastConfigSyncedAt?: Prisma.SortOrder
   lastCostSyncedAt?: Prisma.SortOrder
+  lastTagSyncedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -430,9 +550,15 @@ export type AwsAccountMaxOrderByAggregateInput = {
   accountName?: Prisma.SortOrder
   ownerDepartment?: Prisma.SortOrder
   defaultRegion?: Prisma.SortOrder
+  roleArn?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
+  connectionStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  connectionError?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastConfigSyncedAt?: Prisma.SortOrder
   lastCostSyncedAt?: Prisma.SortOrder
+  lastTagSyncedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -443,9 +569,15 @@ export type AwsAccountMinOrderByAggregateInput = {
   accountName?: Prisma.SortOrder
   ownerDepartment?: Prisma.SortOrder
   defaultRegion?: Prisma.SortOrder
+  roleArn?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
+  connectionStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  connectionError?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastConfigSyncedAt?: Prisma.SortOrder
   lastCostSyncedAt?: Prisma.SortOrder
+  lastTagSyncedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -458,6 +590,10 @@ export type AwsAccountScalarRelationFilter = {
 export type AwsAccountNullableScalarRelationFilter = {
   is?: Prisma.AwsAccountWhereInput | null
   isNot?: Prisma.AwsAccountWhereInput | null
+}
+
+export type EnumAwsConnectionStatusFieldUpdateOperationsInput = {
+  set?: $Enums.AwsConnectionStatus
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -542,9 +678,15 @@ export type AwsAccountCreateWithoutProjectAwsAccountsInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   resources?: Prisma.CloudResourceCreateNestedManyWithoutAwsAccountInput
@@ -559,9 +701,15 @@ export type AwsAccountUncheckedCreateWithoutProjectAwsAccountsInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   resources?: Prisma.CloudResourceUncheckedCreateNestedManyWithoutAwsAccountInput
@@ -592,9 +740,15 @@ export type AwsAccountUpdateWithoutProjectAwsAccountsInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resources?: Prisma.CloudResourceUpdateManyWithoutAwsAccountNestedInput
@@ -609,9 +763,15 @@ export type AwsAccountUncheckedUpdateWithoutProjectAwsAccountsInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resources?: Prisma.CloudResourceUncheckedUpdateManyWithoutAwsAccountNestedInput
@@ -626,9 +786,15 @@ export type AwsAccountCreateWithoutResourcesInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountCreateNestedManyWithoutAwsAccountInput
@@ -643,9 +809,15 @@ export type AwsAccountUncheckedCreateWithoutResourcesInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedCreateNestedManyWithoutAwsAccountInput
@@ -676,9 +848,15 @@ export type AwsAccountUpdateWithoutResourcesInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUpdateManyWithoutAwsAccountNestedInput
@@ -693,9 +871,15 @@ export type AwsAccountUncheckedUpdateWithoutResourcesInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedUpdateManyWithoutAwsAccountNestedInput
@@ -710,9 +894,15 @@ export type AwsAccountCreateWithoutCostRecordsInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountCreateNestedManyWithoutAwsAccountInput
@@ -727,9 +917,15 @@ export type AwsAccountUncheckedCreateWithoutCostRecordsInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedCreateNestedManyWithoutAwsAccountInput
@@ -760,9 +956,15 @@ export type AwsAccountUpdateWithoutCostRecordsInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUpdateManyWithoutAwsAccountNestedInput
@@ -777,9 +979,15 @@ export type AwsAccountUncheckedUpdateWithoutCostRecordsInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedUpdateManyWithoutAwsAccountNestedInput
@@ -794,9 +1002,15 @@ export type AwsAccountCreateWithoutActivityLogsInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountCreateNestedManyWithoutAwsAccountInput
@@ -811,9 +1025,15 @@ export type AwsAccountUncheckedCreateWithoutActivityLogsInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedCreateNestedManyWithoutAwsAccountInput
@@ -844,9 +1064,15 @@ export type AwsAccountUpdateWithoutActivityLogsInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUpdateManyWithoutAwsAccountNestedInput
@@ -861,9 +1087,15 @@ export type AwsAccountUncheckedUpdateWithoutActivityLogsInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedUpdateManyWithoutAwsAccountNestedInput
@@ -878,9 +1110,15 @@ export type AwsAccountCreateWithoutSyncJobsInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountCreateNestedManyWithoutAwsAccountInput
@@ -895,9 +1133,15 @@ export type AwsAccountUncheckedCreateWithoutSyncJobsInput = {
   accountName: string
   ownerDepartment: $Enums.Department
   defaultRegion: string
+  roleArn?: string | null
+  externalId?: string | null
+  connectionStatus?: $Enums.AwsConnectionStatus
+  verifiedAt?: Date | string | null
+  connectionError?: string | null
   isActive?: boolean
   lastConfigSyncedAt?: Date | string | null
   lastCostSyncedAt?: Date | string | null
+  lastTagSyncedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedCreateNestedManyWithoutAwsAccountInput
@@ -928,9 +1172,15 @@ export type AwsAccountUpdateWithoutSyncJobsInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUpdateManyWithoutAwsAccountNestedInput
@@ -945,9 +1195,15 @@ export type AwsAccountUncheckedUpdateWithoutSyncJobsInput = {
   accountName?: Prisma.StringFieldUpdateOperationsInput | string
   ownerDepartment?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
   defaultRegion?: Prisma.StringFieldUpdateOperationsInput | string
+  roleArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  connectionStatus?: Prisma.EnumAwsConnectionStatusFieldUpdateOperationsInput | $Enums.AwsConnectionStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  connectionError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastConfigSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastCostSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastTagSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectAwsAccounts?: Prisma.ProjectAwsAccountUncheckedUpdateManyWithoutAwsAccountNestedInput
@@ -1029,9 +1285,15 @@ export type AwsAccountSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   accountName?: boolean
   ownerDepartment?: boolean
   defaultRegion?: boolean
+  roleArn?: boolean
+  externalId?: boolean
+  connectionStatus?: boolean
+  verifiedAt?: boolean
+  connectionError?: boolean
   isActive?: boolean
   lastConfigSyncedAt?: boolean
   lastCostSyncedAt?: boolean
+  lastTagSyncedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   projectAwsAccounts?: boolean | Prisma.AwsAccount$projectAwsAccountsArgs<ExtArgs>
@@ -1048,9 +1310,15 @@ export type AwsAccountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   accountName?: boolean
   ownerDepartment?: boolean
   defaultRegion?: boolean
+  roleArn?: boolean
+  externalId?: boolean
+  connectionStatus?: boolean
+  verifiedAt?: boolean
+  connectionError?: boolean
   isActive?: boolean
   lastConfigSyncedAt?: boolean
   lastCostSyncedAt?: boolean
+  lastTagSyncedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["awsAccount"]>
@@ -1061,9 +1329,15 @@ export type AwsAccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   accountName?: boolean
   ownerDepartment?: boolean
   defaultRegion?: boolean
+  roleArn?: boolean
+  externalId?: boolean
+  connectionStatus?: boolean
+  verifiedAt?: boolean
+  connectionError?: boolean
   isActive?: boolean
   lastConfigSyncedAt?: boolean
   lastCostSyncedAt?: boolean
+  lastTagSyncedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["awsAccount"]>
@@ -1074,14 +1348,20 @@ export type AwsAccountSelectScalar = {
   accountName?: boolean
   ownerDepartment?: boolean
   defaultRegion?: boolean
+  roleArn?: boolean
+  externalId?: boolean
+  connectionStatus?: boolean
+  verifiedAt?: boolean
+  connectionError?: boolean
   isActive?: boolean
   lastConfigSyncedAt?: boolean
   lastCostSyncedAt?: boolean
+  lastTagSyncedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AwsAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "awsAccountId" | "accountName" | "ownerDepartment" | "defaultRegion" | "isActive" | "lastConfigSyncedAt" | "lastCostSyncedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["awsAccount"]>
+export type AwsAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "awsAccountId" | "accountName" | "ownerDepartment" | "defaultRegion" | "roleArn" | "externalId" | "connectionStatus" | "verifiedAt" | "connectionError" | "isActive" | "lastConfigSyncedAt" | "lastCostSyncedAt" | "lastTagSyncedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["awsAccount"]>
 export type AwsAccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   projectAwsAccounts?: boolean | Prisma.AwsAccount$projectAwsAccountsArgs<ExtArgs>
   resources?: boolean | Prisma.AwsAccount$resourcesArgs<ExtArgs>
@@ -1108,9 +1388,15 @@ export type $AwsAccountPayload<ExtArgs extends runtime.Types.Extensions.Internal
     accountName: string
     ownerDepartment: $Enums.Department
     defaultRegion: string
+    roleArn: string | null
+    externalId: string | null
+    connectionStatus: $Enums.AwsConnectionStatus
+    verifiedAt: Date | null
+    connectionError: string | null
     isActive: boolean
     lastConfigSyncedAt: Date | null
     lastCostSyncedAt: Date | null
+    lastTagSyncedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["awsAccount"]>
@@ -1546,9 +1832,15 @@ export interface AwsAccountFieldRefs {
   readonly accountName: Prisma.FieldRef<"AwsAccount", 'String'>
   readonly ownerDepartment: Prisma.FieldRef<"AwsAccount", 'Department'>
   readonly defaultRegion: Prisma.FieldRef<"AwsAccount", 'String'>
+  readonly roleArn: Prisma.FieldRef<"AwsAccount", 'String'>
+  readonly externalId: Prisma.FieldRef<"AwsAccount", 'String'>
+  readonly connectionStatus: Prisma.FieldRef<"AwsAccount", 'AwsConnectionStatus'>
+  readonly verifiedAt: Prisma.FieldRef<"AwsAccount", 'DateTime'>
+  readonly connectionError: Prisma.FieldRef<"AwsAccount", 'String'>
   readonly isActive: Prisma.FieldRef<"AwsAccount", 'Boolean'>
   readonly lastConfigSyncedAt: Prisma.FieldRef<"AwsAccount", 'DateTime'>
   readonly lastCostSyncedAt: Prisma.FieldRef<"AwsAccount", 'DateTime'>
+  readonly lastTagSyncedAt: Prisma.FieldRef<"AwsAccount", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"AwsAccount", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AwsAccount", 'DateTime'>
 }

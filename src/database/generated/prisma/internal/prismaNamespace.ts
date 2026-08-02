@@ -1396,9 +1396,15 @@ export const AwsAccountScalarFieldEnum = {
   accountName: 'accountName',
   ownerDepartment: 'ownerDepartment',
   defaultRegion: 'defaultRegion',
+  roleArn: 'roleArn',
+  externalId: 'externalId',
+  connectionStatus: 'connectionStatus',
+  verifiedAt: 'verifiedAt',
+  connectionError: 'connectionError',
   isActive: 'isActive',
   lastConfigSyncedAt: 'lastConfigSyncedAt',
   lastCostSyncedAt: 'lastCostSyncedAt',
+  lastTagSyncedAt: 'lastTagSyncedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1511,16 +1517,16 @@ export type FileAttachmentScalarFieldEnum = (typeof FileAttachmentScalarFieldEnu
 export const ActivityLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  projectId: 'projectId',
-  awsAccountId: 'awsAccountId',
-  resourceId: 'resourceId',
   action: 'action',
   entityType: 'entityType',
   entityId: 'entityId',
   description: 'description',
   oldValues: 'oldValues',
   newValues: 'newValues',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  projectId: 'projectId',
+  awsAccountId: 'awsAccountId',
+  cloudResourceId: 'cloudResourceId'
 } as const
 
 export type ActivityLogScalarFieldEnum = (typeof ActivityLogScalarFieldEnum)[keyof typeof ActivityLogScalarFieldEnum]
@@ -1706,6 +1712,20 @@ export type ListEnumProjectMemberRoleFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'AwsConnectionStatus'
+ */
+export type EnumAwsConnectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AwsConnectionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AwsConnectionStatus[]'
+ */
+export type ListEnumAwsConnectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AwsConnectionStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -1779,6 +1799,20 @@ export type EnumActivityActionFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'ActivityAction[]'
  */
 export type ListEnumActivityActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityAction[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ActivityEntityType'
+ */
+export type EnumActivityEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityEntityType'>
+    
+
+
+/**
+ * Reference to a field of type 'ActivityEntityType[]'
+ */
+export type ListEnumActivityEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityEntityType[]'>
     
 
 

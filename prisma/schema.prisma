@@ -55,6 +55,7 @@ enum ResourceSource {
 enum SyncType {
   AWS_CONFIG
   COST_EXPLORER
+  TAGS
 }
 
 enum SyncStatus {
@@ -65,6 +66,7 @@ enum SyncStatus {
 
 enum ActivityAction {
   CREATE
+  LOGIN
   UPDATE
   DELETE
   ADD_MEMBER
@@ -84,6 +86,25 @@ enum Environment {
   UAT
   STAGING
   PROD
+}
+
+enum ActivityEntityType {
+  USER
+  PROJECT
+  AWS_ACCOUNT
+  PROJECT_AWS_ACCOUNT
+  PROJECT_MEMBER
+  CLOUD_RESOURCE
+  RESOURCE_DOCUMENTATION
+  FILE_ATTACHMENT
+  COST_RECORD
+  AWS_SYNC
+}
+
+enum AwsConnectionStatus {
+  PENDING
+  CONNECTED
+  FAILED
 }
 
 /**
@@ -187,16 +208,24 @@ model ProjectMember {
  */
 
 model AwsAccount {
-  id                 String     @id @default(uuid()) @db.Uuid
-  awsAccountId       String     @unique @map("aws_account_id") @db.VarChar(12)
-  accountName        String     @map("account_name") @db.VarChar(150)
-  ownerDepartment    Department @map("owner_department")
-  defaultRegion      String     @map("default_region") @db.VarChar(50)
-  isActive           Boolean    @default(true) @map("is_active")
-  lastConfigSyncedAt DateTime?  @map("last_config_synced_at") @db.Timestamptz()
-  lastCostSyncedAt   DateTime?  @map("last_cost_synced_at") @db.Timestamptz()
-  createdAt          DateTime   @default(now()) @map("created_at") @db.Timestamptz()
-  updatedAt          DateTime   @updatedAt @map("updated_at") @db.Timestamptz()
+  id              String     @id @default(uuid()) @db.Uuid
+  awsAccountId    String     @unique @map("aws_account_id") @db.VarChar(12)
+  accountName     String     @map("account_name") @db.VarChar(150)
+  ownerDepartment Department @map("owner_department")
+  defaultRegion   String     @map("default_region") @db.VarChar(50)
+
+  roleArn          String?             @map("role_arn") @db.VarChar(2048)
+  externalId       String?             @map("external_id") @db.VarChar(255)
+  connectionStatus AwsConnectionStatus @default(PENDING) @map("connection_status")
+  verifiedAt       DateTime?           @map("verified_at") @db.Timestamptz()
+  connectionError  String?             @map("connection_error") @db.Text
+
+  isActive           Boolean   @default(true) @map("is_active")
+  lastConfigSyncedAt DateTime? @map("last_config_synced_at") @db.Timestamptz()
+  lastCostSyncedAt   DateTime? @map("last_cost_synced_at") @db.Timestamptz()
+  lastTagSyncedAt    DateTime? @map("last_tag_synced_at") @db.Timestamptz()
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt          DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
 
   projectAwsAccounts ProjectAwsAccount[]
   resources          CloudResource[]
@@ -205,6 +234,7 @@ model AwsAccount {
   syncJobs           SyncJob[]
 
   @@index([ownerDepartment])
+  @@index([connectionStatus])
   @@index([isActive])
   @@map("aws_accounts")
 }
@@ -330,6 +360,7 @@ model CostRecord {
   awsAccount AwsAccount     @relation(fields: [awsAccountId], references: [id])
   resource   CloudResource? @relation(fields: [resourceId], references: [id], onDelete: SetNull)
 
+  @@unique([awsAccountId, periodStart, periodEnd, service, region])
   @@index([awsAccountId])
   @@index([resourceId])
   @@index([periodStart])
@@ -402,30 +433,28 @@ model FileAttachment {
  */
 
 model ActivityLog {
-  id           String         @id @default(uuid()) @db.Uuid
-  userId       String?        @map("user_id") @db.Uuid
-  projectId    String?        @map("project_id") @db.Uuid
-  awsAccountId String?        @map("aws_account_id") @db.Uuid
-  resourceId   String?        @map("resource_id") @db.Uuid
-  action       ActivityAction
-  entityType   String         @map("entity_type") @db.VarChar(100)
-  entityId     String?        @map("entity_id") @db.Uuid
-  description  String?        @db.Text
-  oldValues    Json?          @map("old_values")
-  newValues    Json?          @map("new_values")
-  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz()
+  id          String             @id @default(uuid()) @db.Uuid
+  userId      String?            @map("user_id") @db.Uuid
+  action      ActivityAction
+  entityType  ActivityEntityType @map("entity_type")
+  entityId    String?            @map("entity_id") @db.Uuid
+  description String?            @db.Text
+  oldValues   Json?              @map("old_values")
+  newValues   Json?              @map("new_values")
+  createdAt   DateTime           @default(now()) @map("created_at") @db.Timestamptz()
 
-  user       User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
-  project    Project?       @relation(fields: [projectId], references: [id], onDelete: SetNull)
-  awsAccount AwsAccount?    @relation(fields: [awsAccountId], references: [id], onDelete: SetNull)
-  resource   CloudResource? @relation(fields: [resourceId], references: [id], onDelete: SetNull)
+  user            User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  project         Project?       @relation(fields: [projectId], references: [id])
+  projectId       String?        @db.Uuid
+  awsAccount      AwsAccount?    @relation(fields: [awsAccountId], references: [id])
+  awsAccountId    String?        @db.Uuid
+  cloudResource   CloudResource? @relation(fields: [cloudResourceId], references: [id])
+  cloudResourceId String?        @db.Uuid
 
   @@index([userId])
-  @@index([projectId])
-  @@index([awsAccountId])
-  @@index([resourceId])
   @@index([action])
   @@index([entityType])
+  @@index([entityType, entityId])
   @@index([createdAt])
   @@map("activity_logs")
 }
@@ -442,15 +471,15 @@ model SyncJob {
   syncType        SyncType   @map("sync_type")
   status          SyncStatus @default(RUNNING)
   region          String?    @db.VarChar(50)
-  startedAt       DateTime   @default(now()) @map("started_at") @db.Timestamptz()
-  completedAt     DateTime?  @map("completed_at") @db.Timestamptz()
+  startedAt       DateTime   @default(now()) @map("started_at") @db.Timestamptz() //เวลาที่เริ่ม Sync จริง
+  completedAt     DateTime?  @map("completed_at") @db.Timestamptz() //Sync เสร็จแล้ว ไม่ว่าจะ SUCCESS หรือ FAILED
   recordsReceived Int        @default(0) @map("records_received")
   recordsCreated  Int        @default(0) @map("records_created")
   recordsUpdated  Int        @default(0) @map("records_updated")
   recordsFailed   Int        @default(0) @map("records_failed")
   errorMessage    String?    @map("error_message") @db.Text
   triggeredById   String?    @map("triggered_by_id") @db.Uuid
-  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz()
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz() //เวลาที่สร้าง Record ใน Database
 
   awsAccount  AwsAccount @relation(fields: [awsAccountId], references: [id])
   triggeredBy User?      @relation("SyncTriggeredBy", fields: [triggeredById], references: [id], onDelete: SetNull)

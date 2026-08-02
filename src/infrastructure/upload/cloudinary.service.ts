@@ -8,16 +8,20 @@ import { ConfigService } from '@nestjs/config';
 import { v2 as cloudinary } from 'cloudinary';
 import { Readable } from 'stream';
 
-@Injectable()
+@Injectable({})
 export class CloudinaryService {
   private readonly logger = new Logger(CloudinaryService.name);
   constructor(
     private readonly configService: ConfigService<EnvVariableType, true>
   ) {
     cloudinary.config({
-      cloud_name: this.configService.get('CLOUDINARY_CLOUD_NAME'),
-      api_key: this.configService.get('CLOUDINARY_API_KEY'),
-      api_secret: this.configService.get('CLOUDINARY_API_SECRET')
+      cloud_name: this.configService.get('CLOUDINARY_CLOUD_NAME', {
+        infer: true
+      }),
+      api_key: this.configService.get('CLOUDINARY_API_KEY', { infer: true }),
+      api_secret: this.configService.get('CLOUDINARY_API_SECRET', {
+        infer: true
+      })
     });
   }
   upload(file: Express.Multer.File): Promise<string> {

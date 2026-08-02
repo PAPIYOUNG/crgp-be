@@ -68,7 +68,8 @@ export type ResourceSource = (typeof ResourceSource)[keyof typeof ResourceSource
 
 export const SyncType = {
   AWS_CONFIG: 'AWS_CONFIG',
-  COST_EXPLORER: 'COST_EXPLORER'
+  COST_EXPLORER: 'COST_EXPLORER',
+  TAGS: 'TAGS'
 } as const
 
 export type SyncType = (typeof SyncType)[keyof typeof SyncType]
@@ -85,6 +86,7 @@ export type SyncStatus = (typeof SyncStatus)[keyof typeof SyncStatus]
 
 export const ActivityAction = {
   CREATE: 'CREATE',
+  LOGIN: 'LOGIN',
   UPDATE: 'UPDATE',
   DELETE: 'DELETE',
   ADD_MEMBER: 'ADD_MEMBER',
@@ -110,3 +112,28 @@ export const Environment = {
 } as const
 
 export type Environment = (typeof Environment)[keyof typeof Environment]
+
+
+export const ActivityEntityType = {
+  USER: 'USER',
+  PROJECT: 'PROJECT',
+  AWS_ACCOUNT: 'AWS_ACCOUNT',
+  PROJECT_AWS_ACCOUNT: 'PROJECT_AWS_ACCOUNT',
+  PROJECT_MEMBER: 'PROJECT_MEMBER',
+  CLOUD_RESOURCE: 'CLOUD_RESOURCE',
+  RESOURCE_DOCUMENTATION: 'RESOURCE_DOCUMENTATION',
+  FILE_ATTACHMENT: 'FILE_ATTACHMENT',
+  COST_RECORD: 'COST_RECORD',
+  AWS_SYNC: 'AWS_SYNC'
+} as const
+
+export type ActivityEntityType = (typeof ActivityEntityType)[keyof typeof ActivityEntityType]
+
+
+export const AwsConnectionStatus = {
+  PENDING: 'PENDING',
+  CONNECTED: 'CONNECTED',
+  FAILED: 'FAILED'
+} as const
+
+export type AwsConnectionStatus = (typeof AwsConnectionStatus)[keyof typeof AwsConnectionStatus]
