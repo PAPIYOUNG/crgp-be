@@ -334,6 +334,36 @@ export class AwsSyncService {
     }
   }
 
+  async syncAll(awsAccountId: string, currentUserId: string) {
+    const startedAt = new Date();
+
+    //  1. Config: สร้าง/อัปเดต Resource ก่อน
+    //   2. Tags: ใช้ Resource ARN ที่อยู่ใน Database เพื่อจับคู่
+    //  3. Cost: ไม่ได้พึ่ง Resource ทำเป็นลำดับสุดท้าย
+
+    const configResult = await this.syncConfig(awsAccountId, currentUserId);
+
+    const tagResult = await this.syncTags(awsAccountId, currentUserId);
+
+    const costResult = await this.syncCost(awsAccountId, currentUserId);
+
+    const completedAt = new Date();
+
+    return {
+      message: 'AWS synchronization completed successfully',
+      awsAccountId,
+      startedAt,
+      completedAt,
+      durationMs: completedAt.getTime() - startedAt.getTime(),
+
+      results: {
+        config: configResult,
+        tags: tagResult,
+        cost: costResult
+      }
+    };
+  }
+
   //ส่วนย่อย
   private getErrorMessage(error: unknown): string {
     if (error instanceof Error) {

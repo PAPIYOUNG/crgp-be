@@ -16,6 +16,14 @@ import { CurrentUser } from '@/common/decorators/current-user.decorator';
 export class AwsSyncController {
   constructor(private readonly awsSyncService: AwsSyncService) {}
 
+  @Post(':awsAccountId/sync-all')
+  syncAll(
+    @Param('awsAccountId', ParseUUIDPipe) awsAccountId: string,
+    @CurrentUser('sub') currentUserId: string
+  ) {
+    return this.awsSyncService.syncAll(awsAccountId, currentUserId);
+  }
+
   @Post('config/:id')
   syncConfig(
     @Param('id', ParseUUIDPipe) accountId: string,

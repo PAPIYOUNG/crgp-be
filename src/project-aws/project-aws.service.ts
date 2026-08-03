@@ -285,8 +285,20 @@ export class ProjectAwsService {
       select: {
         id: true,
         linkedAt: true,
-        linkedBy: true,
-        project: true,
+
+        linkedBy: {
+          select: {
+            id: true,
+            email: true
+          }
+        },
+
+        project: {
+          select: {
+            id: true,
+            projectName: true
+          }
+        },
 
         awsAccount: {
           select: {
@@ -301,38 +313,47 @@ export class ProjectAwsService {
     if (!projectAwsAccount) {
       throw new NotFoundException('AWS account is not linked to this project');
     }
-
-    await this.prisma.projectAwsAccount.delete({
+    //เช็คก่อนเอา aws account ออก ต้องไม่มี resource ผูกเเล้ว
+    const linkedResourceCount = await this.prisma.cloudResource.count({
       where: {
-        projectId_awsAccountId: {
-          projectId,
-          awsAccountId: accountId
-        }
+        projectId,
+        awsAccountId: accountId,
+        isDeleted: false
       }
     });
-    //activity log
-    await this.activityLogsService.createActivityLog(userId, {
-      action: ActivityAction.UNLINK_AWS_ACCOUNT,
-      entityType: 'PROJECT_AWS_ACCOUNT',
-      entityId: projectAwsAccount.id,
-      description: `${projectAwsAccount.linkedBy.email} unlinked AWS account "${projectAwsAccount.awsAccount.accountName}" from project "${projectAwsAccount.project.projectName}".`,
-      oldValues: {
-        projectId,
 
-        awsAccountId: projectAwsAccount.awsAccount.id,
-        awsAccountNumber: projectAwsAccount.awsAccount.awsAccountId,
-        accountName: projectAwsAccount.awsAccount.accountName
-      }
+    if (linkedResourceCount > 0) {
+      throw new ConflictException(
+        `Cannot unlink this AWS account because ${linkedResourceCount} resource(s) from this account are still linked to the project`
+      );
+    }
 
-      //ตอน unlink ไม่มีค่า newValues ให้เก็บ
+    await this.prisma.$transaction(async (tx) => {
+      await tx.projectAwsAccount.delete({
+        where: {
+          projectId_awsAccountId: {
+            projectId,
+            awsAccountId: accountId
+          }
+        }
+      });
+
+      await this.activityLogsService.createActivityLog(userId, {
+        action: ActivityAction.UNLINK_AWS_ACCOUNT,
+        entityType: 'PROJECT_AWS_ACCOUNT',
+        entityId: projectAwsAccount.id,
+        description: `${projectAwsAccount.linkedBy.email} unlinked AWS account "${projectAwsAccount.awsAccount.accountName}" from project "${projectAwsAccount.project.projectName}".`,
+        oldValues: {
+          projectId,
+          awsAccountId: projectAwsAccount.awsAccount.id,
+          awsAccountNumber: projectAwsAccount.awsAccount.awsAccountId,
+          accountName: projectAwsAccount.awsAccount.accountName
+        }
+      });
     });
 
     return {
-      message: 'Unlink AWS account from project successfully',
-      data: {
-        linkId: projectAwsAccount.id,
-        awsAccount: projectAwsAccount.awsAccount
-      }
+      message: 'AWS account unlinked from project successfully'
     };
   }
 

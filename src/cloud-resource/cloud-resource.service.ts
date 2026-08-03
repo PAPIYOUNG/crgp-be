@@ -265,6 +265,9 @@ export class CloudResourceService {
       ...(query.isDeleted !== undefined && {
         isDeleted: query.isDeleted
       }),
+      ...(query.unassigned === true && {
+        projectId: null
+      }),
 
       ...(query.search && {
         OR: [
@@ -486,22 +489,30 @@ export class CloudResourceService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    const resource = await this.prisma.cloudResource.findUnique({
+    const resource = await this.prisma.cloudResource.findFirst({
       where: {
         id: resourceId,
         isDeleted: false,
         ...(user.role !== SystemRole.ADMIN && {
-          project: {
-            members: {
-              some: {
-                userId: user.id
+          OR: [
+            {
+              project: {
+                members: {
+                  some: {
+                    userId: user.id
+                  }
+                }
               }
+            },
+            {
+              projectId: null
             }
-          }
+          ]
         })
       },
       select: {
         id: true,
+        awsAccountId: true,
         projectId: true,
         ownerId: true
       }
@@ -517,12 +528,33 @@ export class CloudResourceService {
           id: dto.projectId
         },
         select: {
-          id: true
+          id: true,
+          projectAwsAccounts: {
+            select: {
+              awsAccountId: true
+            }
+          }
         }
       });
 
       if (!project) {
         throw new NotFoundException('Project not found');
+      }
+
+      const accountIsLinked = project.projectAwsAccounts.some(
+        (linkedAccount) => linkedAccount.awsAccountId === resource.awsAccountId
+      );
+
+      if (!accountIsLinked) {
+        throw new BadRequestException(
+          'The AWS account of this resource is not linked to the project'
+        );
+      }
+
+      if (resource.projectId !== null && resource.projectId !== dto.projectId) {
+        throw new BadRequestException(
+          'This resource is already linked to another project'
+        );
       }
 
       if (user.role !== SystemRole.ADMIN) {

@@ -291,8 +291,19 @@ export class ProjectService {
         resources: {
           select: {
             id: true,
-            environment: true,
+            resourceName: true,
+            resourceIdentifier: true,
             resourceType: true,
+            environment: true,
+            region: true,
+            awsAccountId: true,
+            awsAccount: {
+              select: {
+                id: true,
+                awsAccountId: true,
+                accountName: true
+              }
+            },
             tags: {
               select: {
                 tagKey: true,
@@ -459,6 +470,21 @@ export class ProjectService {
         id: member.id,
         memberRole: member.memberRole,
         user: member.user
+      })),
+
+      resources: project.resources.map((resource) => ({
+        id: resource.id,
+        resourceName: resource.resourceName,
+        resourceIdentifier: resource.resourceIdentifier,
+        resourceType: resource.resourceType,
+        region: resource.region,
+        awsAccountId: resource.awsAccountId,
+        environment: resource.environment,
+        awsAccount: resource.awsAccount,
+        tags: resource.tags.map((tag) => ({
+          tagKey: tag.tagKey,
+          tagValue: tag.tagValue
+        }))
       })),
 
       stats: {

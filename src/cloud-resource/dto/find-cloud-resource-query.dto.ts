@@ -101,4 +101,9 @@ export class FindCloudResourceQueryDto {
   @Min(1)
   @Max(100)
   limit: number = 10;
+
+  @IsOptional()
+  @Transform(({ value }) => value === 'true')
+  @IsBoolean()
+  unassigned?: boolean;
 }
