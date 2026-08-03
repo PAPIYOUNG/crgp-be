@@ -30,6 +30,21 @@ const CLOUD_RESOURCE_SORT_FIELDS = [
   'updatedAt'
 ] as const;
 
+export const RESOURCE_SERVICES = [
+  'EC2',
+  'RDS',
+  'S3',
+  'LAMBDA',
+  'EKS',
+  'LOAD_BALANCER',
+  'WAF',
+  'CDN',
+  'NETWORKING',
+  'OTHER'
+] as const;
+
+export type ResourceService = (typeof RESOURCE_SERVICES)[number];
+
 export type CloudResourceSortField =
   (typeof CLOUD_RESOURCE_SORT_FIELDS)[number];
 
@@ -106,4 +121,8 @@ export class FindCloudResourceQueryDto {
   @Transform(({ value }) => value === 'true')
   @IsBoolean()
   unassigned?: boolean;
+
+  @IsOptional()
+  @IsIn(RESOURCE_SERVICES)
+  service?: ResourceService;
 }

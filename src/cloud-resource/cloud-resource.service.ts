@@ -12,6 +12,7 @@ import {
 import { FindCloudResourceQueryDto } from '@/cloud-resource/dto/find-cloud-resource-query.dto';
 import { Prisma } from '@/database/generated/prisma/client';
 import { UpdateCloudResourceDto } from '@/cloud-resource/dto/update-cloud-resource.dto';
+import { RESOURCE_SERVICE_MAP } from '@/common/constant/cloud-resource.constants';
 
 @Injectable()
 export class CloudResourceService {
@@ -234,74 +235,153 @@ export class CloudResourceService {
 
   async getAllResource(id: string, query: FindCloudResourceQueryDto) {
     const user = await this.prisma.user.findUnique({
-      where: { id },
+      where: {
+        id
+      },
       select: {
         id: true,
         role: true
       }
     });
+
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
+    const search = query.search?.trim();
+
+    const selectedServiceTypes = query.service
+      ? RESOURCE_SERVICE_MAP[query.service as keyof typeof RESOURCE_SERVICE_MAP]
+      : undefined;
+
     const where: Prisma.CloudResourceWhereInput = {
-      ...(user.role !== SystemRole.ADMIN && {
-        project: {
-          members: {
-            some: {
-              userId: user.id
-            }
-          }
-        }
+      /*
+       * หน้า List ปกติแสดงเฉพาะ Resource ที่ยังไม่ถูกลบ
+       * ถ้าส่ง isDeleted=true จึงจะแสดงของที่ถูก soft delete
+       */
+      isDeleted: query.isDeleted ?? false,
+
+      /*
+       * ใช้ AND เพื่อไม่ให้ OR ของ permission
+       * ถูก OR ของ search เขียนทับ
+       */
+      AND: [
+        /*
+         * Admin ไม่มีข้อจำกัด
+         *
+         * User เห็น:
+         * 1. Resource ใน Project ที่ตัวเองเป็นสมาชิก
+         * 2. Resource ที่ยังไม่ได้ผูก Project
+         */
+        ...(user.role !== SystemRole.ADMIN
+          ? [
+              {
+                OR: [
+                  {
+                    project: {
+                      members: {
+                        some: {
+                          userId: user.id
+                        }
+                      }
+                    }
+                  },
+                  {
+                    projectId: null
+                  }
+                ]
+              } satisfies Prisma.CloudResourceWhereInput
+            ]
+          : []),
+
+        /*
+         * Search จากชื่อ, identifier และ resource type
+         */
+        ...(search
+          ? [
+              {
+                OR: [
+                  {
+                    resourceName: {
+                      contains: search,
+                      mode: Prisma.QueryMode.insensitive
+                    }
+                  },
+                  {
+                    resourceIdentifier: {
+                      contains: search,
+                      mode: Prisma.QueryMode.insensitive
+                    }
+                  },
+                  {
+                    resourceType: {
+                      contains: search,
+                      mode: Prisma.QueryMode.insensitive
+                    }
+                  }
+                ]
+              } satisfies Prisma.CloudResourceWhereInput
+            ]
+          : [])
+      ],
+
+      ...(query.awsAccountId && {
+        awsAccountId: query.awsAccountId
       }),
 
-      ...(query.awsAccountId && { awsAccountId: query.awsAccountId }),
-      ...(query.projectId && { projectId: query.projectId }),
-      ...(query.ownerId && { ownerId: query.ownerId }),
-      ...(query.resourceType && { resourceType: query.resourceType }),
-      ...(query.region && { region: query.region }),
-      ...(query.source && { source: query.source }),
-      ...(query.environment && { environment: query.environment }),
-      ...(query.isDeleted !== undefined && {
-        isDeleted: query.isDeleted
+      ...(query.projectId && {
+        projectId: query.projectId
       }),
+
+      ...(query.ownerId && {
+        ownerId: query.ownerId
+      }),
+
+      /*
+       * ถ้าส่ง service ให้ service มีความสำคัญกว่า resourceType
+       * ป้องกันการกำหนด resourceType ซ้ำกันใน object
+       */
+      ...(selectedServiceTypes
+        ? {
+            resourceType: {
+              in: [...selectedServiceTypes]
+            }
+          }
+        : query.resourceType
+          ? {
+              resourceType: query.resourceType
+            }
+          : {}),
+
+      ...(query.region && {
+        region: query.region
+      }),
+
+      ...(query.source && {
+        source: query.source
+      }),
+
+      ...(query.environment && {
+        environment: query.environment
+      }),
+
       ...(query.unassigned === true && {
         projectId: null
-      }),
-
-      ...(query.search && {
-        OR: [
-          {
-            resourceName: {
-              contains: query.search,
-              mode: 'insensitive'
-            }
-          },
-          {
-            resourceIdentifier: {
-              contains: query.search,
-              mode: 'insensitive'
-            }
-          },
-          {
-            resourceType: {
-              contains: query.search,
-              mode: 'insensitive'
-            }
-          }
-        ]
       })
     };
+
     const sortBy = query.sortBy ?? 'createdAt';
     const order = query.order ?? 'desc';
+
     const orderBy: Prisma.CloudResourceOrderByWithRelationInput = {
       [sortBy]: order
     };
+
     const page = query.page ?? 1;
     const limit = query.limit ?? 10;
     const skip = (page - 1) * limit;
 
-    const [items, totalItems] = await Promise.all([
+    const [items, totalItems, allResourceTypes] = await Promise.all([
       this.prisma.cloudResource.findMany({
         where,
         orderBy,
@@ -314,13 +394,48 @@ export class CloudResourceService {
               awsAccountId: true,
               accountName: true
             }
+          },
+          project: {
+            select: {
+              id: true,
+              projectName: true,
+              projectCode: true
+            }
           }
         }
       }),
+
       this.prisma.cloudResource.count({
         where
+      }),
+
+      this.prisma.cloudResource.findMany({
+        where,
+        select: {
+          resourceType: true
+        }
       })
     ]);
+
+    const summary = {
+      EC2: 0,
+      RDS: 0,
+      S3: 0,
+      LAMBDA: 0,
+      EKS: 0,
+      LOAD_BALANCER: 0,
+      WAF: 0,
+      CDN: 0,
+      NETWORKING: 0,
+      OTHER: 0
+    };
+
+    for (const resource of allResourceTypes) {
+      const category = this.getResourceServiceCategory(resource.resourceType);
+
+      summary[category]++;
+    }
+
     const totalPages = Math.ceil(totalItems / limit);
 
     return {
@@ -332,7 +447,8 @@ export class CloudResourceService {
         totalPages,
         hasNextPage: page < totalPages,
         hasPreviousPage: page > 1
-      }
+      },
+      summary
     };
   }
 
@@ -674,6 +790,69 @@ export class CloudResourceService {
       message: 'Cloud resource updated successfully',
       resource: updatedResource
     };
+  }
+
+  private getResourceServiceCategory(
+    resourceType: string
+  ):
+    | 'EC2'
+    | 'RDS'
+    | 'S3'
+    | 'LAMBDA'
+    | 'EKS'
+    | 'LOAD_BALANCER'
+    | 'WAF'
+    | 'CDN'
+    | 'NETWORKING'
+    | 'OTHER' {
+    switch (resourceType) {
+      case 'AWS::EC2::Instance':
+      case 'AWS::EC2::Volume':
+      case 'AWS::EC2::Snapshot':
+        return 'EC2';
+
+      case 'AWS::RDS::DBInstance':
+      case 'AWS::RDS::DBCluster':
+      case 'AWS::RDS::DBSubnetGroup':
+        return 'RDS';
+
+      case 'AWS::S3::Bucket':
+        return 'S3';
+
+      case 'AWS::Lambda::Function':
+        return 'LAMBDA';
+
+      case 'AWS::EKS::Cluster':
+      case 'AWS::EKS::Nodegroup':
+        return 'EKS';
+
+      case 'AWS::ElasticLoadBalancing::LoadBalancer':
+      case 'AWS::ElasticLoadBalancingV2::LoadBalancer':
+        return 'LOAD_BALANCER';
+
+      case 'AWS::WAF::WebACL':
+      case 'AWS::WAFv2::WebACL':
+        return 'WAF';
+
+      case 'AWS::CloudFront::Distribution':
+        return 'CDN';
+
+      case 'AWS::EC2::Subnet':
+      case 'AWS::EC2::VPC':
+      case 'AWS::EC2::RouteTable':
+      case 'AWS::EC2::SubnetRouteTableAssociation':
+      case 'AWS::EC2::SecurityGroup':
+      case 'AWS::EC2::NetworkAcl':
+      case 'AWS::EC2::InternetGateway':
+      case 'AWS::EC2::NatGateway':
+      case 'AWS::EC2::EIP':
+      case 'AWS::Route53Resolver::ResolverRule':
+      case 'AWS::Route53Resolver::ResolverRuleAssociation':
+        return 'NETWORKING';
+
+      default:
+        return 'OTHER';
+    }
   }
 }
 
