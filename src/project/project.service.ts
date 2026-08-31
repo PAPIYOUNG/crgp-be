@@ -515,14 +515,26 @@ export class ProjectService {
     if (existing) {
       throw new ConflictException('Project name already exists');
     }
-    return this.prisma.project.create({
-      data: {
-        ...data,
-        projectName,
-        startDate: data.startDate ? new Date(data.startDate) : undefined,
-        endDate: data.endDate ? new Date(data.endDate) : undefined,
-        createdById: currentUserId
-      }
+    return this.prisma.$transaction(async (tx) => {
+      const project = await tx.project.create({
+        data: {
+          ...data,
+          projectName,
+          startDate: data.startDate ? new Date(data.startDate) : undefined,
+          endDate: data.endDate ? new Date(data.endDate) : undefined,
+          createdById: currentUserId
+        }
+      });
+
+      await tx.projectMember.create({
+        data: {
+          projectId: project.id,
+          userId: currentUserId,
+          memberRole: ProjectMemberRole.TECHNICAL_OWNER
+        }
+      });
+
+      return project;
     });
   }
 

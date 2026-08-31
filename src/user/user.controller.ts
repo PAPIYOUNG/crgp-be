@@ -42,6 +42,13 @@ export class UserController {
     //   size: file.size
     // };
   }
+
+  @Roles(SystemRole.ADMIN, SystemRole.USER)
+  @Get('options')
+  getOptionUsers() {
+    return this.userService.getUserOptions();
+  }
+
   @Roles(SystemRole.ADMIN)
   @Get()
   getAllUser(): Promise<UserGetPayload<{ omit: { passwordHash: true } }>[]> {

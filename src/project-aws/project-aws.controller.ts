@@ -30,6 +30,20 @@ export class ProjectAwsController {
       role
     );
   }
+  //คนที่ดูได้ ทุกคนที่เป็น member ของ Project (สำหรับ dropdown เลือก account มา link)
+  @Get('available')
+  getAvailableAwsAccounts(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @CurrentUser('sub') userId: string,
+    @CurrentUser('role') role: SystemRole
+  ) {
+    return this.projectAwsService.getAvailableAwsAccounts(
+      projectId,
+      userId,
+      role
+    );
+  }
+
   //คนที่ดูได้ ADMIN,TECHNICAL_OWNER+Member ของ Project
   @Get(':accountId')
   getProjectAwsAccountById(
@@ -45,7 +59,7 @@ export class ProjectAwsController {
       role
     );
   }
-  //คนที่ทำได้ ADMIN,TECHNICAL_OWNER ของ Project
+  //คนที่ทำได้ ADMIN,BUSINESS_OWNER,TECHNICAL_OWNER ของ Project
   @Post()
   linkAwsAccount(
     @Param('projectId', ParseUUIDPipe) projectId: string,
@@ -56,7 +70,7 @@ export class ProjectAwsController {
     return this.projectAwsService.linkAwsAccount(projectId, dto, userId, role);
   }
 
-  //คนที่ทำได้ ADMIN,TECHNICAL_OWNER ของ Project
+  //คนที่ทำได้ ADMIN,BUSINESS_OWNER,TECHNICAL_OWNER ของ Project
   @Delete(':accountId')
   @HttpCode(HttpStatus.OK)
   unlinkAwsAccount(
