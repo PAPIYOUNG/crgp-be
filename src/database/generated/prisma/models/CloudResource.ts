@@ -36,6 +36,7 @@ export type CloudResourceMinAggregateOutputType = {
   availabilityZone: string | null
   resourceStatus: string | null
   source: $Enums.ResourceSource | null
+  provider: $Enums.ResourceProvider | null
   environment: $Enums.Environment | null
   ownerId: string | null
   description: string | null
@@ -59,6 +60,7 @@ export type CloudResourceMaxAggregateOutputType = {
   availabilityZone: string | null
   resourceStatus: string | null
   source: $Enums.ResourceSource | null
+  provider: $Enums.ResourceProvider | null
   environment: $Enums.Environment | null
   ownerId: string | null
   description: string | null
@@ -82,6 +84,7 @@ export type CloudResourceCountAggregateOutputType = {
   availabilityZone: number
   resourceStatus: number
   source: number
+  provider: number
   environment: number
   ownerId: number
   description: number
@@ -108,6 +111,7 @@ export type CloudResourceMinAggregateInputType = {
   availabilityZone?: true
   resourceStatus?: true
   source?: true
+  provider?: true
   environment?: true
   ownerId?: true
   description?: true
@@ -131,6 +135,7 @@ export type CloudResourceMaxAggregateInputType = {
   availabilityZone?: true
   resourceStatus?: true
   source?: true
+  provider?: true
   environment?: true
   ownerId?: true
   description?: true
@@ -154,6 +159,7 @@ export type CloudResourceCountAggregateInputType = {
   availabilityZone?: true
   resourceStatus?: true
   source?: true
+  provider?: true
   environment?: true
   ownerId?: true
   description?: true
@@ -241,7 +247,7 @@ export type CloudResourceGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type CloudResourceGroupByOutputType = {
   id: string
-  awsAccountId: string
+  awsAccountId: string | null
   projectId: string | null
   resourceIdentifier: string
   resourceArn: string | null
@@ -251,6 +257,7 @@ export type CloudResourceGroupByOutputType = {
   availabilityZone: string | null
   resourceStatus: string | null
   source: $Enums.ResourceSource
+  provider: $Enums.ResourceProvider
   environment: $Enums.Environment | null
   ownerId: string | null
   description: string | null
@@ -286,7 +293,7 @@ export type CloudResourceWhereInput = {
   OR?: Prisma.CloudResourceWhereInput[]
   NOT?: Prisma.CloudResourceWhereInput | Prisma.CloudResourceWhereInput[]
   id?: Prisma.UuidFilter<"CloudResource"> | string
-  awsAccountId?: Prisma.UuidFilter<"CloudResource"> | string
+  awsAccountId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   projectId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   resourceIdentifier?: Prisma.StringFilter<"CloudResource"> | string
   resourceArn?: Prisma.StringNullableFilter<"CloudResource"> | string | null
@@ -296,6 +303,7 @@ export type CloudResourceWhereInput = {
   availabilityZone?: Prisma.StringNullableFilter<"CloudResource"> | string | null
   resourceStatus?: Prisma.StringNullableFilter<"CloudResource"> | string | null
   source?: Prisma.EnumResourceSourceFilter<"CloudResource"> | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFilter<"CloudResource"> | $Enums.ResourceProvider
   environment?: Prisma.EnumEnvironmentNullableFilter<"CloudResource"> | $Enums.Environment | null
   ownerId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   description?: Prisma.StringNullableFilter<"CloudResource"> | string | null
@@ -306,7 +314,7 @@ export type CloudResourceWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"CloudResource"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CloudResource"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CloudResource"> | Date | string
-  awsAccount?: Prisma.XOR<Prisma.AwsAccountScalarRelationFilter, Prisma.AwsAccountWhereInput>
+  awsAccount?: Prisma.XOR<Prisma.AwsAccountNullableScalarRelationFilter, Prisma.AwsAccountWhereInput> | null
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   tags?: Prisma.ResourceTagListRelationFilter
@@ -318,7 +326,7 @@ export type CloudResourceWhereInput = {
 
 export type CloudResourceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  awsAccountId?: Prisma.SortOrder
+  awsAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   projectId?: Prisma.SortOrderInput | Prisma.SortOrder
   resourceIdentifier?: Prisma.SortOrder
   resourceArn?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -328,6 +336,7 @@ export type CloudResourceOrderByWithRelationInput = {
   availabilityZone?: Prisma.SortOrderInput | Prisma.SortOrder
   resourceStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   source?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
   environment?: Prisma.SortOrderInput | Prisma.SortOrder
   ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -354,7 +363,7 @@ export type CloudResourceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CloudResourceWhereInput | Prisma.CloudResourceWhereInput[]
   OR?: Prisma.CloudResourceWhereInput[]
   NOT?: Prisma.CloudResourceWhereInput | Prisma.CloudResourceWhereInput[]
-  awsAccountId?: Prisma.UuidFilter<"CloudResource"> | string
+  awsAccountId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   projectId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   resourceIdentifier?: Prisma.StringFilter<"CloudResource"> | string
   resourceArn?: Prisma.StringNullableFilter<"CloudResource"> | string | null
@@ -364,6 +373,7 @@ export type CloudResourceWhereUniqueInput = Prisma.AtLeast<{
   availabilityZone?: Prisma.StringNullableFilter<"CloudResource"> | string | null
   resourceStatus?: Prisma.StringNullableFilter<"CloudResource"> | string | null
   source?: Prisma.EnumResourceSourceFilter<"CloudResource"> | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFilter<"CloudResource"> | $Enums.ResourceProvider
   environment?: Prisma.EnumEnvironmentNullableFilter<"CloudResource"> | $Enums.Environment | null
   ownerId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   description?: Prisma.StringNullableFilter<"CloudResource"> | string | null
@@ -374,7 +384,7 @@ export type CloudResourceWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"CloudResource"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CloudResource"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CloudResource"> | Date | string
-  awsAccount?: Prisma.XOR<Prisma.AwsAccountScalarRelationFilter, Prisma.AwsAccountWhereInput>
+  awsAccount?: Prisma.XOR<Prisma.AwsAccountNullableScalarRelationFilter, Prisma.AwsAccountWhereInput> | null
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   tags?: Prisma.ResourceTagListRelationFilter
@@ -386,7 +396,7 @@ export type CloudResourceWhereUniqueInput = Prisma.AtLeast<{
 
 export type CloudResourceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  awsAccountId?: Prisma.SortOrder
+  awsAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   projectId?: Prisma.SortOrderInput | Prisma.SortOrder
   resourceIdentifier?: Prisma.SortOrder
   resourceArn?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -396,6 +406,7 @@ export type CloudResourceOrderByWithAggregationInput = {
   availabilityZone?: Prisma.SortOrderInput | Prisma.SortOrder
   resourceStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   source?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
   environment?: Prisma.SortOrderInput | Prisma.SortOrder
   ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -416,7 +427,7 @@ export type CloudResourceScalarWhereWithAggregatesInput = {
   OR?: Prisma.CloudResourceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CloudResourceScalarWhereWithAggregatesInput | Prisma.CloudResourceScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"CloudResource"> | string
-  awsAccountId?: Prisma.UuidWithAggregatesFilter<"CloudResource"> | string
+  awsAccountId?: Prisma.UuidNullableWithAggregatesFilter<"CloudResource"> | string | null
   projectId?: Prisma.UuidNullableWithAggregatesFilter<"CloudResource"> | string | null
   resourceIdentifier?: Prisma.StringWithAggregatesFilter<"CloudResource"> | string
   resourceArn?: Prisma.StringNullableWithAggregatesFilter<"CloudResource"> | string | null
@@ -426,6 +437,7 @@ export type CloudResourceScalarWhereWithAggregatesInput = {
   availabilityZone?: Prisma.StringNullableWithAggregatesFilter<"CloudResource"> | string | null
   resourceStatus?: Prisma.StringNullableWithAggregatesFilter<"CloudResource"> | string | null
   source?: Prisma.EnumResourceSourceWithAggregatesFilter<"CloudResource"> | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderWithAggregatesFilter<"CloudResource"> | $Enums.ResourceProvider
   environment?: Prisma.EnumEnvironmentNullableWithAggregatesFilter<"CloudResource"> | $Enums.Environment | null
   ownerId?: Prisma.UuidNullableWithAggregatesFilter<"CloudResource"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"CloudResource"> | string | null
@@ -448,6 +460,7 @@ export type CloudResourceCreateInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -457,7 +470,7 @@ export type CloudResourceCreateInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  awsAccount: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
+  awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
   project?: Prisma.ProjectCreateNestedOneWithoutResourcesInput
   owner?: Prisma.UserCreateNestedOneWithoutOwnedResourcesInput
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
@@ -469,7 +482,7 @@ export type CloudResourceCreateInput = {
 
 export type CloudResourceUncheckedCreateInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -479,6 +492,7 @@ export type CloudResourceUncheckedCreateInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -506,6 +520,7 @@ export type CloudResourceUpdateInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -515,7 +530,7 @@ export type CloudResourceUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  awsAccount?: Prisma.AwsAccountUpdateOneRequiredWithoutResourcesNestedInput
+  awsAccount?: Prisma.AwsAccountUpdateOneWithoutResourcesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutResourcesNestedInput
   owner?: Prisma.UserUpdateOneWithoutOwnedResourcesNestedInput
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
@@ -527,7 +542,7 @@ export type CloudResourceUpdateInput = {
 
 export type CloudResourceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -537,6 +552,7 @@ export type CloudResourceUncheckedUpdateInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -556,7 +572,7 @@ export type CloudResourceUncheckedUpdateInput = {
 
 export type CloudResourceCreateManyInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -566,6 +582,7 @@ export type CloudResourceCreateManyInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -588,6 +605,7 @@ export type CloudResourceUpdateManyMutationInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -601,7 +619,7 @@ export type CloudResourceUpdateManyMutationInput = {
 
 export type CloudResourceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -611,6 +629,7 @@ export type CloudResourceUncheckedUpdateManyInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -651,6 +670,7 @@ export type CloudResourceCountOrderByAggregateInput = {
   availabilityZone?: Prisma.SortOrder
   resourceStatus?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
   environment?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -675,6 +695,7 @@ export type CloudResourceMaxOrderByAggregateInput = {
   availabilityZone?: Prisma.SortOrder
   resourceStatus?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
   environment?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -698,6 +719,7 @@ export type CloudResourceMinOrderByAggregateInput = {
   availabilityZone?: Prisma.SortOrder
   resourceStatus?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
   environment?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -849,6 +871,10 @@ export type EnumResourceSourceFieldUpdateOperationsInput = {
   set?: $Enums.ResourceSource
 }
 
+export type EnumResourceProviderFieldUpdateOperationsInput = {
+  set?: $Enums.ResourceProvider
+}
+
 export type NullableEnumEnvironmentFieldUpdateOperationsInput = {
   set?: $Enums.Environment | null
 }
@@ -939,6 +965,7 @@ export type CloudResourceCreateWithoutOwnerInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -948,7 +975,7 @@ export type CloudResourceCreateWithoutOwnerInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  awsAccount: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
+  awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
   project?: Prisma.ProjectCreateNestedOneWithoutResourcesInput
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
@@ -959,7 +986,7 @@ export type CloudResourceCreateWithoutOwnerInput = {
 
 export type CloudResourceUncheckedCreateWithoutOwnerInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -969,6 +996,7 @@ export type CloudResourceUncheckedCreateWithoutOwnerInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1016,7 +1044,7 @@ export type CloudResourceScalarWhereInput = {
   OR?: Prisma.CloudResourceScalarWhereInput[]
   NOT?: Prisma.CloudResourceScalarWhereInput | Prisma.CloudResourceScalarWhereInput[]
   id?: Prisma.UuidFilter<"CloudResource"> | string
-  awsAccountId?: Prisma.UuidFilter<"CloudResource"> | string
+  awsAccountId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   projectId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   resourceIdentifier?: Prisma.StringFilter<"CloudResource"> | string
   resourceArn?: Prisma.StringNullableFilter<"CloudResource"> | string | null
@@ -1026,6 +1054,7 @@ export type CloudResourceScalarWhereInput = {
   availabilityZone?: Prisma.StringNullableFilter<"CloudResource"> | string | null
   resourceStatus?: Prisma.StringNullableFilter<"CloudResource"> | string | null
   source?: Prisma.EnumResourceSourceFilter<"CloudResource"> | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFilter<"CloudResource"> | $Enums.ResourceProvider
   environment?: Prisma.EnumEnvironmentNullableFilter<"CloudResource"> | $Enums.Environment | null
   ownerId?: Prisma.UuidNullableFilter<"CloudResource"> | string | null
   description?: Prisma.StringNullableFilter<"CloudResource"> | string | null
@@ -1048,6 +1077,7 @@ export type CloudResourceCreateWithoutProjectInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1057,7 +1087,7 @@ export type CloudResourceCreateWithoutProjectInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  awsAccount: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
+  awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
   owner?: Prisma.UserCreateNestedOneWithoutOwnedResourcesInput
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
@@ -1068,7 +1098,7 @@ export type CloudResourceCreateWithoutProjectInput = {
 
 export type CloudResourceUncheckedCreateWithoutProjectInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
   resourceName?: string | null
@@ -1077,6 +1107,7 @@ export type CloudResourceUncheckedCreateWithoutProjectInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -1130,6 +1161,7 @@ export type CloudResourceCreateWithoutAwsAccountInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1159,6 +1191,7 @@ export type CloudResourceUncheckedCreateWithoutAwsAccountInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -1212,6 +1245,7 @@ export type CloudResourceCreateWithoutTagsInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1221,7 +1255,7 @@ export type CloudResourceCreateWithoutTagsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  awsAccount: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
+  awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
   project?: Prisma.ProjectCreateNestedOneWithoutResourcesInput
   owner?: Prisma.UserCreateNestedOneWithoutOwnedResourcesInput
   costRecords?: Prisma.CostRecordCreateNestedManyWithoutResourceInput
@@ -1232,7 +1266,7 @@ export type CloudResourceCreateWithoutTagsInput = {
 
 export type CloudResourceUncheckedCreateWithoutTagsInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -1242,6 +1276,7 @@ export type CloudResourceUncheckedCreateWithoutTagsInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -1284,6 +1319,7 @@ export type CloudResourceUpdateWithoutTagsInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1293,7 +1329,7 @@ export type CloudResourceUpdateWithoutTagsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  awsAccount?: Prisma.AwsAccountUpdateOneRequiredWithoutResourcesNestedInput
+  awsAccount?: Prisma.AwsAccountUpdateOneWithoutResourcesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutResourcesNestedInput
   owner?: Prisma.UserUpdateOneWithoutOwnedResourcesNestedInput
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
@@ -1304,7 +1340,7 @@ export type CloudResourceUpdateWithoutTagsInput = {
 
 export type CloudResourceUncheckedUpdateWithoutTagsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1314,6 +1350,7 @@ export type CloudResourceUncheckedUpdateWithoutTagsInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1340,6 +1377,7 @@ export type CloudResourceCreateWithoutCostRecordsInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1349,7 +1387,7 @@ export type CloudResourceCreateWithoutCostRecordsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  awsAccount: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
+  awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
   project?: Prisma.ProjectCreateNestedOneWithoutResourcesInput
   owner?: Prisma.UserCreateNestedOneWithoutOwnedResourcesInput
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
@@ -1360,7 +1398,7 @@ export type CloudResourceCreateWithoutCostRecordsInput = {
 
 export type CloudResourceUncheckedCreateWithoutCostRecordsInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -1370,6 +1408,7 @@ export type CloudResourceUncheckedCreateWithoutCostRecordsInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -1412,6 +1451,7 @@ export type CloudResourceUpdateWithoutCostRecordsInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1421,7 +1461,7 @@ export type CloudResourceUpdateWithoutCostRecordsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  awsAccount?: Prisma.AwsAccountUpdateOneRequiredWithoutResourcesNestedInput
+  awsAccount?: Prisma.AwsAccountUpdateOneWithoutResourcesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutResourcesNestedInput
   owner?: Prisma.UserUpdateOneWithoutOwnedResourcesNestedInput
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
@@ -1432,7 +1472,7 @@ export type CloudResourceUpdateWithoutCostRecordsInput = {
 
 export type CloudResourceUncheckedUpdateWithoutCostRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1442,6 +1482,7 @@ export type CloudResourceUncheckedUpdateWithoutCostRecordsInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1468,6 +1509,7 @@ export type CloudResourceCreateWithoutDocumentationInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1477,7 +1519,7 @@ export type CloudResourceCreateWithoutDocumentationInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  awsAccount: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
+  awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
   project?: Prisma.ProjectCreateNestedOneWithoutResourcesInput
   owner?: Prisma.UserCreateNestedOneWithoutOwnedResourcesInput
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
@@ -1488,7 +1530,7 @@ export type CloudResourceCreateWithoutDocumentationInput = {
 
 export type CloudResourceUncheckedCreateWithoutDocumentationInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -1498,6 +1540,7 @@ export type CloudResourceUncheckedCreateWithoutDocumentationInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -1540,6 +1583,7 @@ export type CloudResourceUpdateWithoutDocumentationInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1549,7 +1593,7 @@ export type CloudResourceUpdateWithoutDocumentationInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  awsAccount?: Prisma.AwsAccountUpdateOneRequiredWithoutResourcesNestedInput
+  awsAccount?: Prisma.AwsAccountUpdateOneWithoutResourcesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutResourcesNestedInput
   owner?: Prisma.UserUpdateOneWithoutOwnedResourcesNestedInput
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
@@ -1560,7 +1604,7 @@ export type CloudResourceUpdateWithoutDocumentationInput = {
 
 export type CloudResourceUncheckedUpdateWithoutDocumentationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1570,6 +1614,7 @@ export type CloudResourceUncheckedUpdateWithoutDocumentationInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1596,6 +1641,7 @@ export type CloudResourceCreateWithoutFileAttachmentsInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1605,7 +1651,7 @@ export type CloudResourceCreateWithoutFileAttachmentsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  awsAccount: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
+  awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
   project?: Prisma.ProjectCreateNestedOneWithoutResourcesInput
   owner?: Prisma.UserCreateNestedOneWithoutOwnedResourcesInput
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
@@ -1616,7 +1662,7 @@ export type CloudResourceCreateWithoutFileAttachmentsInput = {
 
 export type CloudResourceUncheckedCreateWithoutFileAttachmentsInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -1626,6 +1672,7 @@ export type CloudResourceUncheckedCreateWithoutFileAttachmentsInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -1668,6 +1715,7 @@ export type CloudResourceUpdateWithoutFileAttachmentsInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1677,7 +1725,7 @@ export type CloudResourceUpdateWithoutFileAttachmentsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  awsAccount?: Prisma.AwsAccountUpdateOneRequiredWithoutResourcesNestedInput
+  awsAccount?: Prisma.AwsAccountUpdateOneWithoutResourcesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutResourcesNestedInput
   owner?: Prisma.UserUpdateOneWithoutOwnedResourcesNestedInput
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
@@ -1688,7 +1736,7 @@ export type CloudResourceUpdateWithoutFileAttachmentsInput = {
 
 export type CloudResourceUncheckedUpdateWithoutFileAttachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1698,6 +1746,7 @@ export type CloudResourceUncheckedUpdateWithoutFileAttachmentsInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1724,6 +1773,7 @@ export type CloudResourceCreateWithoutActivityLogsInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1733,7 +1783,7 @@ export type CloudResourceCreateWithoutActivityLogsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  awsAccount: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
+  awsAccount?: Prisma.AwsAccountCreateNestedOneWithoutResourcesInput
   project?: Prisma.ProjectCreateNestedOneWithoutResourcesInput
   owner?: Prisma.UserCreateNestedOneWithoutOwnedResourcesInput
   tags?: Prisma.ResourceTagCreateNestedManyWithoutResourceInput
@@ -1744,7 +1794,7 @@ export type CloudResourceCreateWithoutActivityLogsInput = {
 
 export type CloudResourceUncheckedCreateWithoutActivityLogsInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -1754,6 +1804,7 @@ export type CloudResourceUncheckedCreateWithoutActivityLogsInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -1796,6 +1847,7 @@ export type CloudResourceUpdateWithoutActivityLogsInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1805,7 +1857,7 @@ export type CloudResourceUpdateWithoutActivityLogsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  awsAccount?: Prisma.AwsAccountUpdateOneRequiredWithoutResourcesNestedInput
+  awsAccount?: Prisma.AwsAccountUpdateOneWithoutResourcesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutResourcesNestedInput
   owner?: Prisma.UserUpdateOneWithoutOwnedResourcesNestedInput
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
@@ -1816,7 +1868,7 @@ export type CloudResourceUpdateWithoutActivityLogsInput = {
 
 export type CloudResourceUncheckedUpdateWithoutActivityLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1826,6 +1878,7 @@ export type CloudResourceUncheckedUpdateWithoutActivityLogsInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1844,7 +1897,7 @@ export type CloudResourceUncheckedUpdateWithoutActivityLogsInput = {
 
 export type CloudResourceCreateManyOwnerInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   projectId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
@@ -1854,6 +1907,7 @@ export type CloudResourceCreateManyOwnerInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   description?: string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1875,6 +1929,7 @@ export type CloudResourceUpdateWithoutOwnerInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1884,7 +1939,7 @@ export type CloudResourceUpdateWithoutOwnerInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  awsAccount?: Prisma.AwsAccountUpdateOneRequiredWithoutResourcesNestedInput
+  awsAccount?: Prisma.AwsAccountUpdateOneWithoutResourcesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutResourcesNestedInput
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
@@ -1895,7 +1950,7 @@ export type CloudResourceUpdateWithoutOwnerInput = {
 
 export type CloudResourceUncheckedUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1905,6 +1960,7 @@ export type CloudResourceUncheckedUpdateWithoutOwnerInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1923,7 +1979,7 @@ export type CloudResourceUncheckedUpdateWithoutOwnerInput = {
 
 export type CloudResourceUncheckedUpdateManyWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1933,6 +1989,7 @@ export type CloudResourceUncheckedUpdateManyWithoutOwnerInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1946,7 +2003,7 @@ export type CloudResourceUncheckedUpdateManyWithoutOwnerInput = {
 
 export type CloudResourceCreateManyProjectInput = {
   id?: string
-  awsAccountId: string
+  awsAccountId?: string | null
   resourceIdentifier: string
   resourceArn?: string | null
   resourceName?: string | null
@@ -1955,6 +2012,7 @@ export type CloudResourceCreateManyProjectInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -1977,6 +2035,7 @@ export type CloudResourceUpdateWithoutProjectInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1986,7 +2045,7 @@ export type CloudResourceUpdateWithoutProjectInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  awsAccount?: Prisma.AwsAccountUpdateOneRequiredWithoutResourcesNestedInput
+  awsAccount?: Prisma.AwsAccountUpdateOneWithoutResourcesNestedInput
   owner?: Prisma.UserUpdateOneWithoutOwnedResourcesNestedInput
   tags?: Prisma.ResourceTagUpdateManyWithoutResourceNestedInput
   costRecords?: Prisma.CostRecordUpdateManyWithoutResourceNestedInput
@@ -1997,7 +2056,7 @@ export type CloudResourceUpdateWithoutProjectInput = {
 
 export type CloudResourceUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2006,6 +2065,7 @@ export type CloudResourceUncheckedUpdateWithoutProjectInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2025,7 +2085,7 @@ export type CloudResourceUncheckedUpdateWithoutProjectInput = {
 
 export type CloudResourceUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  awsAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  awsAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
   resourceArn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2034,6 +2094,7 @@ export type CloudResourceUncheckedUpdateManyWithoutProjectInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2057,6 +2118,7 @@ export type CloudResourceCreateManyAwsAccountInput = {
   availabilityZone?: string | null
   resourceStatus?: string | null
   source?: $Enums.ResourceSource
+  provider?: $Enums.ResourceProvider
   environment?: $Enums.Environment | null
   ownerId?: string | null
   description?: string | null
@@ -2079,6 +2141,7 @@ export type CloudResourceUpdateWithoutAwsAccountInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   configuration?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -2108,6 +2171,7 @@ export type CloudResourceUncheckedUpdateWithoutAwsAccountInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2136,6 +2200,7 @@ export type CloudResourceUncheckedUpdateManyWithoutAwsAccountInput = {
   availabilityZone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resourceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.EnumResourceSourceFieldUpdateOperationsInput | $Enums.ResourceSource
+  provider?: Prisma.EnumResourceProviderFieldUpdateOperationsInput | $Enums.ResourceProvider
   environment?: Prisma.NullableEnumEnvironmentFieldUpdateOperationsInput | $Enums.Environment | null
   ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2218,6 +2283,7 @@ export type CloudResourceSelect<ExtArgs extends runtime.Types.Extensions.Interna
   availabilityZone?: boolean
   resourceStatus?: boolean
   source?: boolean
+  provider?: boolean
   environment?: boolean
   ownerId?: boolean
   description?: boolean
@@ -2228,7 +2294,7 @@ export type CloudResourceSelect<ExtArgs extends runtime.Types.Extensions.Interna
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  awsAccount?: boolean | Prisma.AwsAccountDefaultArgs<ExtArgs>
+  awsAccount?: boolean | Prisma.CloudResource$awsAccountArgs<ExtArgs>
   project?: boolean | Prisma.CloudResource$projectArgs<ExtArgs>
   owner?: boolean | Prisma.CloudResource$ownerArgs<ExtArgs>
   tags?: boolean | Prisma.CloudResource$tagsArgs<ExtArgs>
@@ -2251,6 +2317,7 @@ export type CloudResourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   availabilityZone?: boolean
   resourceStatus?: boolean
   source?: boolean
+  provider?: boolean
   environment?: boolean
   ownerId?: boolean
   description?: boolean
@@ -2261,7 +2328,7 @@ export type CloudResourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  awsAccount?: boolean | Prisma.AwsAccountDefaultArgs<ExtArgs>
+  awsAccount?: boolean | Prisma.CloudResource$awsAccountArgs<ExtArgs>
   project?: boolean | Prisma.CloudResource$projectArgs<ExtArgs>
   owner?: boolean | Prisma.CloudResource$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["cloudResource"]>
@@ -2278,6 +2345,7 @@ export type CloudResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   availabilityZone?: boolean
   resourceStatus?: boolean
   source?: boolean
+  provider?: boolean
   environment?: boolean
   ownerId?: boolean
   description?: boolean
@@ -2288,7 +2356,7 @@ export type CloudResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  awsAccount?: boolean | Prisma.AwsAccountDefaultArgs<ExtArgs>
+  awsAccount?: boolean | Prisma.CloudResource$awsAccountArgs<ExtArgs>
   project?: boolean | Prisma.CloudResource$projectArgs<ExtArgs>
   owner?: boolean | Prisma.CloudResource$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["cloudResource"]>
@@ -2305,6 +2373,7 @@ export type CloudResourceSelectScalar = {
   availabilityZone?: boolean
   resourceStatus?: boolean
   source?: boolean
+  provider?: boolean
   environment?: boolean
   ownerId?: boolean
   description?: boolean
@@ -2317,9 +2386,9 @@ export type CloudResourceSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CloudResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "awsAccountId" | "projectId" | "resourceIdentifier" | "resourceArn" | "resourceName" | "resourceType" | "region" | "availabilityZone" | "resourceStatus" | "source" | "environment" | "ownerId" | "description" | "configuration" | "awsCaptureTime" | "lastSyncedAt" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["cloudResource"]>
+export type CloudResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "awsAccountId" | "projectId" | "resourceIdentifier" | "resourceArn" | "resourceName" | "resourceType" | "region" | "availabilityZone" | "resourceStatus" | "source" | "provider" | "environment" | "ownerId" | "description" | "configuration" | "awsCaptureTime" | "lastSyncedAt" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["cloudResource"]>
 export type CloudResourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  awsAccount?: boolean | Prisma.AwsAccountDefaultArgs<ExtArgs>
+  awsAccount?: boolean | Prisma.CloudResource$awsAccountArgs<ExtArgs>
   project?: boolean | Prisma.CloudResource$projectArgs<ExtArgs>
   owner?: boolean | Prisma.CloudResource$ownerArgs<ExtArgs>
   tags?: boolean | Prisma.CloudResource$tagsArgs<ExtArgs>
@@ -2330,12 +2399,12 @@ export type CloudResourceInclude<ExtArgs extends runtime.Types.Extensions.Intern
   _count?: boolean | Prisma.CloudResourceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CloudResourceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  awsAccount?: boolean | Prisma.AwsAccountDefaultArgs<ExtArgs>
+  awsAccount?: boolean | Prisma.CloudResource$awsAccountArgs<ExtArgs>
   project?: boolean | Prisma.CloudResource$projectArgs<ExtArgs>
   owner?: boolean | Prisma.CloudResource$ownerArgs<ExtArgs>
 }
 export type CloudResourceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  awsAccount?: boolean | Prisma.AwsAccountDefaultArgs<ExtArgs>
+  awsAccount?: boolean | Prisma.CloudResource$awsAccountArgs<ExtArgs>
   project?: boolean | Prisma.CloudResource$projectArgs<ExtArgs>
   owner?: boolean | Prisma.CloudResource$ownerArgs<ExtArgs>
 }
@@ -2343,7 +2412,7 @@ export type CloudResourceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type $CloudResourcePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CloudResource"
   objects: {
-    awsAccount: Prisma.$AwsAccountPayload<ExtArgs>
+    awsAccount: Prisma.$AwsAccountPayload<ExtArgs> | null
     project: Prisma.$ProjectPayload<ExtArgs> | null
     owner: Prisma.$UserPayload<ExtArgs> | null
     tags: Prisma.$ResourceTagPayload<ExtArgs>[]
@@ -2354,7 +2423,7 @@ export type $CloudResourcePayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    awsAccountId: string
+    awsAccountId: string | null
     projectId: string | null
     resourceIdentifier: string
     resourceArn: string | null
@@ -2364,6 +2433,7 @@ export type $CloudResourcePayload<ExtArgs extends runtime.Types.Extensions.Inter
     availabilityZone: string | null
     resourceStatus: string | null
     source: $Enums.ResourceSource
+    provider: $Enums.ResourceProvider
     environment: $Enums.Environment | null
     ownerId: string | null
     description: string | null
@@ -2768,7 +2838,7 @@ readonly fields: CloudResourceFieldRefs;
  */
 export interface Prisma__CloudResourceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  awsAccount<T extends Prisma.AwsAccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AwsAccountDefaultArgs<ExtArgs>>): Prisma.Prisma__AwsAccountClient<runtime.Types.Result.GetResult<Prisma.$AwsAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  awsAccount<T extends Prisma.CloudResource$awsAccountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CloudResource$awsAccountArgs<ExtArgs>>): Prisma.Prisma__AwsAccountClient<runtime.Types.Result.GetResult<Prisma.$AwsAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   project<T extends Prisma.CloudResource$projectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CloudResource$projectArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   owner<T extends Prisma.CloudResource$ownerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CloudResource$ownerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   tags<T extends Prisma.CloudResource$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CloudResource$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResourceTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2816,6 +2886,7 @@ export interface CloudResourceFieldRefs {
   readonly availabilityZone: Prisma.FieldRef<"CloudResource", 'String'>
   readonly resourceStatus: Prisma.FieldRef<"CloudResource", 'String'>
   readonly source: Prisma.FieldRef<"CloudResource", 'ResourceSource'>
+  readonly provider: Prisma.FieldRef<"CloudResource", 'ResourceProvider'>
   readonly environment: Prisma.FieldRef<"CloudResource", 'Environment'>
   readonly ownerId: Prisma.FieldRef<"CloudResource", 'String'>
   readonly description: Prisma.FieldRef<"CloudResource", 'String'>
@@ -3224,6 +3295,25 @@ export type CloudResourceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many CloudResources to delete.
    */
   limit?: number
+}
+
+/**
+ * CloudResource.awsAccount
+ */
+export type CloudResource$awsAccountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AwsAccount
+   */
+  select?: Prisma.AwsAccountSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AwsAccount
+   */
+  omit?: Prisma.AwsAccountOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AwsAccountInclude<ExtArgs> | null
+  where?: Prisma.AwsAccountWhereInput
 }
 
 /**

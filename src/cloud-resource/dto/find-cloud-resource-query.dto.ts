@@ -1,4 +1,8 @@
-import { Environment, ResourceSource } from '@/database/generated/prisma/enums';
+import {
+  Environment,
+  ResourceProvider,
+  ResourceSource
+} from '@/database/generated/prisma/enums';
 import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
@@ -76,6 +80,10 @@ export class FindCloudResourceQueryDto {
   @IsOptional()
   @IsEnum(ResourceSource)
   source?: ResourceSource;
+
+  @IsOptional()
+  @IsEnum(ResourceProvider)
+  provider?: ResourceProvider;
 
   @IsOptional()
   @IsEnum(Environment)

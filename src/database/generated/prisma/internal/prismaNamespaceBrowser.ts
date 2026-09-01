@@ -174,6 +174,7 @@ export const CloudResourceScalarFieldEnum = {
   availabilityZone: 'availabilityZone',
   resourceStatus: 'resourceStatus',
   source: 'source',
+  provider: 'provider',
   environment: 'environment',
   ownerId: 'ownerId',
   description: 'description',

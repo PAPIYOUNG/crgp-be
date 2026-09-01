@@ -323,6 +323,13 @@ export type EnumResourceSourceFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumResourceSourceFilter<$PrismaModel> | $Enums.ResourceSource
 }
 
+export type EnumResourceProviderFilter<$PrismaModel = never> = {
+  equals?: $Enums.ResourceProvider | Prisma.EnumResourceProviderFieldRefInput<$PrismaModel>
+  in?: $Enums.ResourceProvider[] | Prisma.ListEnumResourceProviderFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ResourceProvider[] | Prisma.ListEnumResourceProviderFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumResourceProviderFilter<$PrismaModel> | $Enums.ResourceProvider
+}
+
 export type EnumEnvironmentNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.Environment | Prisma.EnumEnvironmentFieldRefInput<$PrismaModel> | null
   in?: $Enums.Environment[] | Prisma.ListEnumEnvironmentFieldRefInput<$PrismaModel> | null
@@ -377,6 +384,16 @@ export type EnumResourceSourceWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumResourceSourceFilter<$PrismaModel>
   _max?: Prisma.NestedEnumResourceSourceFilter<$PrismaModel>
+}
+
+export type EnumResourceProviderWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ResourceProvider | Prisma.EnumResourceProviderFieldRefInput<$PrismaModel>
+  in?: $Enums.ResourceProvider[] | Prisma.ListEnumResourceProviderFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ResourceProvider[] | Prisma.ListEnumResourceProviderFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumResourceProviderWithAggregatesFilter<$PrismaModel> | $Enums.ResourceProvider
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumResourceProviderFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumResourceProviderFilter<$PrismaModel>
 }
 
 export type EnumEnvironmentNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -884,6 +901,13 @@ export type NestedEnumResourceSourceFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumResourceSourceFilter<$PrismaModel> | $Enums.ResourceSource
 }
 
+export type NestedEnumResourceProviderFilter<$PrismaModel = never> = {
+  equals?: $Enums.ResourceProvider | Prisma.EnumResourceProviderFieldRefInput<$PrismaModel>
+  in?: $Enums.ResourceProvider[] | Prisma.ListEnumResourceProviderFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ResourceProvider[] | Prisma.ListEnumResourceProviderFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumResourceProviderFilter<$PrismaModel> | $Enums.ResourceProvider
+}
+
 export type NestedEnumEnvironmentNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.Environment | Prisma.EnumEnvironmentFieldRefInput<$PrismaModel> | null
   in?: $Enums.Environment[] | Prisma.ListEnumEnvironmentFieldRefInput<$PrismaModel> | null
@@ -913,6 +937,16 @@ export type NestedEnumResourceSourceWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumResourceSourceFilter<$PrismaModel>
   _max?: Prisma.NestedEnumResourceSourceFilter<$PrismaModel>
+}
+
+export type NestedEnumResourceProviderWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ResourceProvider | Prisma.EnumResourceProviderFieldRefInput<$PrismaModel>
+  in?: $Enums.ResourceProvider[] | Prisma.ListEnumResourceProviderFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ResourceProvider[] | Prisma.ListEnumResourceProviderFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumResourceProviderWithAggregatesFilter<$PrismaModel> | $Enums.ResourceProvider
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumResourceProviderFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumResourceProviderFilter<$PrismaModel>
 }
 
 export type NestedEnumEnvironmentNullableWithAggregatesFilter<$PrismaModel = never> = {

@@ -1,4 +1,5 @@
 import { CloudResourceService } from '@/cloud-resource/cloud-resource.service';
+import { CreateResourceDto } from '@/cloud-resource/dto/create-resource.dto';
 import { FindCloudResourceQueryDto } from '@/cloud-resource/dto/find-cloud-resource-query.dto';
 import { UpdateCloudResourceDto } from '@/cloud-resource/dto/update-cloud-resource.dto';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
@@ -9,6 +10,7 @@ import {
   Param,
   ParseUUIDPipe,
   Patch,
+  Post,
   Query
 } from '@nestjs/common';
 
@@ -39,5 +41,13 @@ export class CloudResourceController {
     @Body() dto: UpdateCloudResourceDto
   ) {
     return this.cloudResourceService.editResource(userId, resourceId, dto);
+  }
+
+  @Post()
+  createResource(
+    @CurrentUser('sub') userId: string,
+    @Body() dto: CreateResourceDto
+  ) {
+    return this.cloudResourceService.createResource(userId, dto);
   }
 }

@@ -52,6 +52,14 @@ enum ResourceSource {
   AWS_CONFIG
 }
 
+enum ResourceProvider {
+  AWS
+  AZURE
+  GCP
+  ON_PREM
+  OTHER
+}
+
 enum SyncType {
   AWS_CONFIG
   COST_EXPLORER
@@ -269,31 +277,33 @@ model ProjectAwsAccount {
  */
 
 model CloudResource {
-  id                 String         @id @default(uuid()) @db.Uuid
-  awsAccountId       String         @map("aws_account_id") @db.Uuid
-  projectId          String?        @map("project_id") @db.Uuid
-  resourceIdentifier String         @map("resource_identifier") @db.VarChar(500)
-  resourceArn        String?        @map("resource_arn") @db.VarChar(1000)
-  resourceName       String?        @map("resource_name") @db.VarChar(255)
-  resourceType       String         @map("resource_type") @db.VarChar(150)
-  region             String?        @db.VarChar(50)
-  availabilityZone   String?        @map("availability_zone") @db.VarChar(50)
-  resourceStatus     String?        @map("resource_status") @db.VarChar(100)
-  source             ResourceSource @default(AWS_CONFIG)
+  id                 String           @id @default(uuid()) @db.Uuid
+  awsAccountId       String?          @map("aws_account_id") @db.Uuid
+  projectId          String?          @map("project_id") @db.Uuid
+  resourceIdentifier String           @map("resource_identifier") @db.VarChar(500)
+  resourceArn        String?          @map("resource_arn") @db.VarChar(1000)
+  resourceName       String?          @map("resource_name") @db.VarChar(255)
+  resourceType       String           @map("resource_type") @db.VarChar(150)
+  region             String?          @db.VarChar(50)
+  availabilityZone   String?          @map("availability_zone") @db.VarChar(50)
+  resourceStatus     String?          @map("resource_status") @db.VarChar(100)
+  source             ResourceSource   @default(AWS_CONFIG)
+  provider           ResourceProvider @default(AWS)
   environment        Environment?
-  ownerId            String?        @map("owner_id") @db.Uuid
-  description        String?        @db.Text
+  ownerId            String?          @map("owner_id") @db.Uuid
+  description        String?          @db.Text
   configuration      Json?
-  awsCaptureTime     DateTime?      @map("aws_capture_time") @db.Timestamptz()
-  lastSyncedAt       DateTime       @map("last_synced_at") @db.Timestamptz()
-  isDeleted          Boolean        @default(false) @map("is_deleted")
-  deletedAt          DateTime?      @map("deleted_at") @db.Timestamptz()
-  createdAt          DateTime       @default(now()) @map("created_at") @db.Timestamptz()
-  updatedAt          DateTime       @updatedAt @map("updated_at") @db.Timestamptz()
+  awsCaptureTime     DateTime?        @map("aws_capture_time") @db.Timestamptz()
+  lastSyncedAt       DateTime         @map("last_synced_at") @db.Timestamptz()
+  isDeleted          Boolean          @default(false) @map("is_deleted")
+  deletedAt          DateTime?        @map("deleted_at") @db.Timestamptz()
+  createdAt          DateTime         @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt          DateTime         @updatedAt @map("updated_at") @db.Timestamptz()
 
-  awsAccount AwsAccount @relation(fields: [awsAccountId], references: [id])
-  project    Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
-  owner      User?      @relation("ResourceOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  // ไม่มี AWS Account เมื่อ resource รันอยู่บน cloud อื่น หรือ private cloud
+  awsAccount AwsAccount? @relation(fields: [awsAccountId], references: [id])
+  project    Project?    @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  owner      User?       @relation("ResourceOwner", fields: [ownerId], references: [id], onDelete: SetNull)
 
   tags            ResourceTag[]
   costRecords     CostRecord[]
@@ -311,6 +321,7 @@ model CloudResource {
   @@index([environment])
   @@index([resourceStatus])
   @@index([isDeleted])
+  @@index([provider])
   @@map("cloud_resources")
 }
 

@@ -66,6 +66,17 @@ export const ResourceSource = {
 export type ResourceSource = (typeof ResourceSource)[keyof typeof ResourceSource]
 
 
+export const ResourceProvider = {
+  AWS: 'AWS',
+  AZURE: 'AZURE',
+  GCP: 'GCP',
+  ON_PREM: 'ON_PREM',
+  OTHER: 'OTHER'
+} as const
+
+export type ResourceProvider = (typeof ResourceProvider)[keyof typeof ResourceProvider]
+
+
 export const SyncType = {
   AWS_CONFIG: 'AWS_CONFIG',
   COST_EXPLORER: 'COST_EXPLORER',
