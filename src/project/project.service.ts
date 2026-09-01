@@ -530,7 +530,7 @@ export class ProjectService {
         data: {
           projectId: project.id,
           userId: currentUserId,
-          memberRole: ProjectMemberRole.TECHNICAL_OWNER
+          memberRole: ProjectMemberRole.BUSINESS_OWNER
         }
       });
 
@@ -620,8 +620,11 @@ export class ProjectService {
       throw new ForbiddenException('You are not a member of this project');
     }
 
-    // User ต้องเป็น Technical Owner เท่านั้น
-    if (member.memberRole !== ProjectMemberRole.TECHNICAL_OWNER) {
+    // User ต้องเป็น Business Owner หรือ Technical Owner เท่านั้น
+    if (
+      member.memberRole !== ProjectMemberRole.TECHNICAL_OWNER &&
+      member.memberRole !== ProjectMemberRole.BUSINESS_OWNER
+    ) {
       throw new ForbiddenException(
         'You do not have permission to update this project'
       );
@@ -672,7 +675,8 @@ export class ProjectService {
 
     const canDelete =
       user.role === SystemRole.ADMIN ||
-      member?.memberRole === ProjectMemberRole.TECHNICAL_OWNER;
+      member?.memberRole === ProjectMemberRole.TECHNICAL_OWNER ||
+      member?.memberRole === ProjectMemberRole.BUSINESS_OWNER;
 
     if (!canDelete) {
       throw new ForbiddenException(
