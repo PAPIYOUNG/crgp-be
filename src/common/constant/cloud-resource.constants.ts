@@ -40,3 +40,18 @@ export const RESOURCE_SERVICE_MAP = {
     'AWS::Route53Resolver::ResolverRuleAssociation'
   ]
 } as const;
+
+/*
+ * Manual resources ไม่มี CloudFormation resource type จริงจาก AWS Config
+ * จึงเลือก resource type ตัวแทนของแต่ละ service ให้ตรงกับ RESOURCE_SERVICE_MAP ด้านบน
+ * เพื่อให้ summary/category นับรวมกับของที่ sync มาจาก AWS ได้ถูกต้อง
+ */
+export const MANUAL_RESOURCE_TYPE_MAP = {
+  EC2: 'AWS::EC2::Instance',
+  RDS: 'AWS::RDS::DBInstance',
+  S3: 'AWS::S3::Bucket',
+  LAMBDA: 'AWS::Lambda::Function',
+  EKS: 'AWS::EKS::Cluster',
+  CLOUDFRONT: 'AWS::CloudFront::Distribution',
+  OTHER: 'Manual::Other::Resource'
+} as const;

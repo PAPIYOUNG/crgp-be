@@ -66,7 +66,7 @@ export class ProjectMemberService {
       member
     };
   }
-
+  //ADMIN, TECHNICAL_OWNER, BUSINESS_OWNER มีสิทธิ์ add member
   async AddProjectMember(
     currentUserId: string,
     projectId: string,
@@ -166,6 +166,7 @@ export class ProjectMemberService {
     }
   }
 
+  //ADMIN, TECHNICAL_OWNER, BUSINESS_OWNER มีสิทธิ์ edit role member
   async editRoleMember(
     currentUserId: string,
     projectId: string,
@@ -233,6 +234,7 @@ export class ProjectMemberService {
     };
   }
 
+  //ADMIN, TECHNICAL_OWNER, BUSINESS_OWNER มีสิทธิ์ remove member
   async removeProjectMember(
     currentUserId: string,
     projectId: string,
@@ -371,10 +373,11 @@ export class ProjectMemberService {
 
     if (
       !memberShip ||
-      memberShip.memberRole !== ProjectMemberRole.TECHNICAL_OWNER
+      (memberShip.memberRole !== ProjectMemberRole.TECHNICAL_OWNER &&
+        memberShip.memberRole !== ProjectMemberRole.BUSINESS_OWNER)
     ) {
       throw new ForbiddenException(
-        'Only an admin or technical owner can manage project members'
+        'Only an admin, business owner, or technical owner can manage project members'
       );
     }
   }

@@ -515,14 +515,26 @@ export class ProjectService {
     if (existing) {
       throw new ConflictException('Project name already exists');
     }
-    return this.prisma.project.create({
-      data: {
-        ...data,
-        projectName,
-        startDate: data.startDate ? new Date(data.startDate) : undefined,
-        endDate: data.endDate ? new Date(data.endDate) : undefined,
-        createdById: currentUserId
-      }
+    return this.prisma.$transaction(async (tx) => {
+      const project = await tx.project.create({
+        data: {
+          ...data,
+          projectName,
+          startDate: data.startDate ? new Date(data.startDate) : undefined,
+          endDate: data.endDate ? new Date(data.endDate) : undefined,
+          createdById: currentUserId
+        }
+      });
+
+      await tx.projectMember.create({
+        data: {
+          projectId: project.id,
+          userId: currentUserId,
+          memberRole: ProjectMemberRole.BUSINESS_OWNER
+        }
+      });
+
+      return project;
     });
   }
 
@@ -608,8 +620,11 @@ export class ProjectService {
       throw new ForbiddenException('You are not a member of this project');
     }
 
-    // User ต้องเป็น Technical Owner เท่านั้น
-    if (member.memberRole !== ProjectMemberRole.TECHNICAL_OWNER) {
+    // User ต้องเป็น Business Owner หรือ Technical Owner เท่านั้น
+    if (
+      member.memberRole !== ProjectMemberRole.TECHNICAL_OWNER &&
+      member.memberRole !== ProjectMemberRole.BUSINESS_OWNER
+    ) {
       throw new ForbiddenException(
         'You do not have permission to update this project'
       );
@@ -660,7 +675,8 @@ export class ProjectService {
 
     const canDelete =
       user.role === SystemRole.ADMIN ||
-      member?.memberRole === ProjectMemberRole.TECHNICAL_OWNER;
+      member?.memberRole === ProjectMemberRole.TECHNICAL_OWNER ||
+      member?.memberRole === ProjectMemberRole.BUSINESS_OWNER;
 
     if (!canDelete) {
       throw new ForbiddenException(

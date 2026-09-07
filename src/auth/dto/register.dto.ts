@@ -25,8 +25,7 @@ export class RegisterDto {
   @IsString()
   email: string;
 
-  @MinLength(4)
-  @IsAlphanumeric()
+  @MinLength(8)
   @IsString()
   @IsNotEmpty()
   password: string;

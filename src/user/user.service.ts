@@ -81,6 +81,13 @@ export class UserService {
     return avatarUrl;
   }
 
+  getUserOptions(): Promise<
+    UserGetPayload<{ omit: { passwordHash: true } }>[]
+  > {
+    return this.prisma.user.findMany({
+      omit: { passwordHash: true }
+    });
+  }
   async getAllUsers(): Promise<
     UserGetPayload<{ omit: { passwordHash: true } }>[]
   > {

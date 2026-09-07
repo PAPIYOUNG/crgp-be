@@ -1435,6 +1435,7 @@ export const CloudResourceScalarFieldEnum = {
   availabilityZone: 'availabilityZone',
   resourceStatus: 'resourceStatus',
   source: 'source',
+  provider: 'provider',
   environment: 'environment',
   ownerId: 'ownerId',
   description: 'description',
@@ -1743,6 +1744,20 @@ export type EnumResourceSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'ResourceSource[]'
  */
 export type ListEnumResourceSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceSource[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ResourceProvider'
+ */
+export type EnumResourceProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceProvider'>
+    
+
+
+/**
+ * Reference to a field of type 'ResourceProvider[]'
+ */
+export type ListEnumResourceProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceProvider[]'>
     
 
 

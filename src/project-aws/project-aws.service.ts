@@ -155,6 +155,37 @@ export class ProjectAwsService {
     };
   }
 
+  async getAvailableAwsAccounts(
+    projectId: string,
+    userId: string,
+    role: SystemRole
+  ) {
+    await this.checkViewPermission(projectId, userId, role);
+
+    const data = await this.prisma.awsAccount.findMany({
+      where: {
+        isActive: true,
+        projectAwsAccounts: {
+          none: {
+            projectId
+          }
+        }
+      },
+      select: {
+        id: true,
+        awsAccountId: true,
+        accountName: true,
+        ownerDepartment: true,
+        defaultRegion: true
+      },
+      orderBy: {
+        accountName: 'asc'
+      }
+    });
+
+    return { data };
+  }
+
   async linkAwsAccount(
     projectId: string,
     dto: LinkProjectAwsAccountDto,
@@ -437,9 +468,12 @@ export class ProjectAwsService {
       throw new ForbiddenException('You are not a member of this project');
     }
 
-    if (projectMember.memberRole !== ProjectMemberRole.TECHNICAL_OWNER) {
+    if (
+      projectMember.memberRole !== ProjectMemberRole.TECHNICAL_OWNER &&
+      projectMember.memberRole !== ProjectMemberRole.BUSINESS_OWNER
+    ) {
       throw new ForbiddenException(
-        'Only the technical owner or admin can manage project AWS accounts'
+        'Only the business owner, technical owner, or admin can manage project AWS accounts'
       );
     }
   }
