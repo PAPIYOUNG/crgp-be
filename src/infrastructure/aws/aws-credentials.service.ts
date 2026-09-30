@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import {
-  fromIni, //ใช้โหลด AWS credentials จากไฟล์ config ของเครื่อง ~/.aws/credentials
+  fromNodeProviderChain, //โหลด credentials จาก env (AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY) ก่อน ถ้าไม่มีค่อยใช้ ~/.aws ตาม AWS_PROFILE
   fromTemporaryCredentials //ใช้สร้าง credential provider ที่จะไปขอ Temporary Credentials ผ่าน STS AssumeRole
 } from '@aws-sdk/credential-providers';
 import type { RuntimeConfigAwsCredentialIdentityProvider } from '@aws-sdk/types';
@@ -14,16 +13,10 @@ export type AssumeRoleConnection = {
 
 @Injectable()
 export class AwsCredentialsService {
-  constructor(private readonly configService: ConfigService) {}
-
   createAssumeRoleCredentials(
     connection: AssumeRoleConnection
   ): RuntimeConfigAwsCredentialIdentityProvider {
-    const profile = this.configService.getOrThrow<string>('AWS_PROFILE');
-
-    const baseCredentials = fromIni({
-      profile
-    });
+    const baseCredentials = fromNodeProviderChain();
 
     return fromTemporaryCredentials({
       masterCredentials: baseCredentials,
