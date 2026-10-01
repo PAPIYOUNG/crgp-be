@@ -36,12 +36,9 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # dotenv environment variable files
-.env
-.env.example
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# env files
+.env*
+!.env.example
 
 # temp directory
 .temp
@@ -56,4 +53,4 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-/src/generated/prisma
+/src/database/generated/prisma

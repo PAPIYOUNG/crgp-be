@@ -3,8 +3,13 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { PrismaService } from '@/database/prisma.service';
-import { ResourceSource, SystemRole } from '@/database/generated/prisma/enums';
+import {
+  ResourceProvider,
+  ResourceSource,
+  SystemRole
+} from '@/database/generated/prisma/enums';
 import {
   SyncCloudResourceInput,
   SyncCloudResourceResult
@@ -12,7 +17,11 @@ import {
 import { FindCloudResourceQueryDto } from '@/cloud-resource/dto/find-cloud-resource-query.dto';
 import { Prisma } from '@/database/generated/prisma/client';
 import { UpdateCloudResourceDto } from '@/cloud-resource/dto/update-cloud-resource.dto';
-import { RESOURCE_SERVICE_MAP } from '@/common/constant/cloud-resource.constants';
+import { CreateResourceDto } from '@/cloud-resource/dto/create-resource.dto';
+import {
+  MANUAL_RESOURCE_TYPE_MAP,
+  RESOURCE_SERVICE_MAP
+} from '@/common/constant/cloud-resource.constants';
 
 @Injectable()
 export class CloudResourceService {
@@ -361,6 +370,10 @@ export class CloudResourceService {
         source: query.source
       }),
 
+      ...(query.provider && {
+        provider: query.provider
+      }),
+
       ...(query.environment && {
         environment: query.environment
       }),
@@ -657,14 +670,18 @@ export class CloudResourceService {
         throw new NotFoundException('Project not found');
       }
 
-      const accountIsLinked = project.projectAwsAccounts.some(
-        (linkedAccount) => linkedAccount.awsAccountId === resource.awsAccountId
-      );
-
-      if (!accountIsLinked) {
-        throw new BadRequestException(
-          'The AWS account of this resource is not linked to the project'
+      // Resource ที่ไม่มี AWS Account (รันบน cloud อื่น/private cloud) ไม่ต้องเช็คการผูก Account กับ Project
+      if (resource.awsAccountId !== null) {
+        const accountIsLinked = project.projectAwsAccounts.some(
+          (linkedAccount) =>
+            linkedAccount.awsAccountId === resource.awsAccountId
         );
+
+        if (!accountIsLinked) {
+          throw new BadRequestException(
+            'The AWS account of this resource is not linked to the project'
+          );
+        }
       }
 
       if (resource.projectId !== null && resource.projectId !== dto.projectId) {
@@ -789,6 +806,168 @@ export class CloudResourceService {
     return {
       message: 'Cloud resource updated successfully',
       resource: updatedResource
+    };
+  }
+
+  async createResource(userId: string, dto: CreateResourceDto) {
+    // Resource ที่ provider เป็น AWS เท่านั้นที่ต้องผูกกับ AWS Account ที่มีอยู่จริง
+    // Resource ที่รันบน cloud อื่น หรือ private cloud ไม่มี AWS Account ให้ผูก
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId
+      },
+      select: {
+        id: true,
+        role: true
+      }
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isAwsProvider = dto.provider === ResourceProvider.AWS;
+
+    if (isAwsProvider) {
+      if (!dto.awsAccountId) {
+        throw new BadRequestException(
+          'AWS account is required when provider is AWS'
+        );
+      }
+
+      const awsAccount = await this.prisma.awsAccount.findUnique({
+        where: {
+          id: dto.awsAccountId
+        },
+        select: {
+          id: true
+        }
+      });
+
+      if (!awsAccount) {
+        throw new NotFoundException('AWS account not found');
+      }
+    }
+
+    if (dto.projectId) {
+      const project = await this.prisma.project.findUnique({
+        where: {
+          id: dto.projectId
+        },
+        select: {
+          id: true,
+          projectAwsAccounts: {
+            select: {
+              awsAccountId: true
+            }
+          }
+        }
+      });
+
+      if (!project) {
+        throw new NotFoundException('Project not found');
+      }
+
+      // Resource ที่ไม่มี AWS Account ไม่ต้องเช็คว่า Account ถูกผูกกับ Project หรือไม่
+      if (isAwsProvider) {
+        const accountIsLinked = project.projectAwsAccounts.some(
+          (linkedAccount) => linkedAccount.awsAccountId === dto.awsAccountId
+        );
+
+        if (!accountIsLinked) {
+          throw new BadRequestException(
+            'The AWS account of this resource is not linked to the project'
+          );
+        }
+      }
+
+      if (user.role !== SystemRole.ADMIN) {
+        const membership = await this.prisma.projectMember.findUnique({
+          where: {
+            projectId_userId: {
+              projectId: dto.projectId,
+              userId: user.id
+            }
+          },
+          select: {
+            id: true
+          }
+        });
+
+        if (!membership) {
+          throw new BadRequestException(
+            'You cannot assign this resource to a project that you are not a member'
+          );
+        }
+      }
+    }
+
+    const configuration =
+      dto.instanceType || dto.monthlyCost
+        ? {
+            ...(dto.instanceType && { instanceType: dto.instanceType }),
+            ...(dto.monthlyCost && { monthlyCost: dto.monthlyCost })
+          }
+        : undefined;
+
+    const resource = await this.prisma.cloudResource.create({
+      data: {
+        awsAccountId: isAwsProvider ? dto.awsAccountId : undefined,
+        // ไม่มี identifier จริงจาก AWS จึงสร้างให้ unique ต่อ resourceType เอง
+        resourceIdentifier: `manual-${randomUUID()}`,
+        resourceName: dto.resourceName,
+        resourceType: MANUAL_RESOURCE_TYPE_MAP[dto.service],
+        region: dto.region,
+        resourceStatus: dto.status,
+        source: ResourceSource.MANUAL,
+        provider: dto.provider,
+        environment: dto.environment,
+        description: dto.description,
+        configuration,
+        projectId: dto.projectId,
+        lastSyncedAt: new Date()
+      },
+      include: {
+        awsAccount: {
+          select: {
+            id: true,
+            awsAccountId: true,
+            accountName: true
+          }
+        },
+
+        project: {
+          select: {
+            id: true,
+            projectCode: true,
+            projectName: true,
+            status: true
+          }
+        },
+
+        owner: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+            department: true
+          }
+        },
+
+        tags: {
+          select: {
+            id: true,
+            tagKey: true,
+            tagValue: true
+          }
+        }
+      }
+    });
+
+    return {
+      message: 'Cloud resource created successfully',
+      resource
     };
   }
 

@@ -620,10 +620,12 @@ export type AwsAccountCreateNestedOneWithoutResourcesInput = {
   connect?: Prisma.AwsAccountWhereUniqueInput
 }
 
-export type AwsAccountUpdateOneRequiredWithoutResourcesNestedInput = {
+export type AwsAccountUpdateOneWithoutResourcesNestedInput = {
   create?: Prisma.XOR<Prisma.AwsAccountCreateWithoutResourcesInput, Prisma.AwsAccountUncheckedCreateWithoutResourcesInput>
   connectOrCreate?: Prisma.AwsAccountCreateOrConnectWithoutResourcesInput
   upsert?: Prisma.AwsAccountUpsertWithoutResourcesInput
+  disconnect?: Prisma.AwsAccountWhereInput | boolean
+  delete?: Prisma.AwsAccountWhereInput | boolean
   connect?: Prisma.AwsAccountWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.AwsAccountUpdateToOneWithWhereWithoutResourcesInput, Prisma.AwsAccountUpdateWithoutResourcesInput>, Prisma.AwsAccountUncheckedUpdateWithoutResourcesInput>
 }
